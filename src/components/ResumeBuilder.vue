@@ -70,4 +70,95 @@
 
           </v-card>
         </template>
-  
+        
+        <template v-slot:item.3>
+          <v-card title="Experience">
+            <br/>
+            <v-row class="ml-3 mb-3">
+              <v-col cols="4"  class="border border-md">
+                <v-row>
+                  <v-col cols="6">
+                    <v-text-field
+                      v-model="employer"
+                      class="mb-2"
+                      label="Employer"
+                      hide-details
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="6">
+                    <v-text-field
+                      v-model="jobTitle"
+                      class="mb-2"
+                      label="Title"
+                      hide-details
+                    ></v-text-field>
+                  </v-col>
+                </v-row>
+
+                <v-row>
+                  <v-col cols="6">
+                    <v-text-field
+                      v-model="jobLocation"
+                      class="mb-2"
+                      label="Location"
+                      hide-details
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="6">
+                    <v-text-field
+                      v-model="jobAccomplishments"
+                      class="mb-2"
+                      label="Accomplishments"
+                      hide-details
+                    ></v-text-field>
+                  </v-col>
+                </v-row>
+
+                <v-row>
+                  <v-col cols="6">
+                    <v-text-field
+                      v-model="jobStartDate"
+                      class="mb-2"
+                      label="Start Date"
+                      type="date"
+                      hide-details
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="6">
+                    <v-text-field
+                      v-model="jobEndDate"
+                      class="mb-2"
+                      label="End Date"
+                      type="date"
+                      hide-details
+                    ></v-text-field>
+                  </v-col>
+                </v-row>
+
+                <v-row>
+                  <v-col cols="5"></v-col>
+                  <v-col cols="7">
+                    <v-btn
+                    color="#711429"
+                    size="large"
+                    variant="elevated"
+                    rounded="xl"
+                    >
+                      Add
+                    </v-btn>
+                  </v-col>
+                </v-row>
+                
+              </v-col>
+              <v-col cols="8">
+                <v-textarea
+                  label="Experience generated text"
+                  v-model="educationGenerated"
+                  variant="filled"
+                  rows="15"
+                  auto-grow
+                ></v-textarea>
+              </v-col>
+            </v-row> 
+          </v-card>
+        </template>
