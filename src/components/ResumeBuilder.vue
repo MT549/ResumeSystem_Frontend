@@ -277,3 +277,56 @@
             </v-row> 
           </v-card>
         </template>
+
+              
+        <template v-slot:item.4>
+          <v-card title="Skills" flat>
+            <br/>
+            <v-row class="ml-3 mb-3">
+              <v-col cols="4"  class="border border-md">
+                <v-row>
+                  <v-col cols="6">
+                    <v-text-field
+                      v-model="skillName"
+                      class="mb-2"
+                      label="Skill Name"
+                      hide-details
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="6">
+                    <v-text-field
+                      v-model="skillLevel"
+                      class="mb-2"
+                      label="Skill Level"
+                      hide-details
+                    ></v-text-field>
+                  </v-col>
+                </v-row>
+
+                <v-row>
+                  <v-col cols="5"></v-col>
+                  <v-col cols="7">
+                    <v-btn
+                    color="#711429"
+                    size="large"
+                    variant="elevated"
+                    rounded="xl"
+                  >
+                    Add
+                  </v-btn>
+                  </v-col>
+                </v-row>
+                
+              </v-col>
+              <v-col cols="8">
+                <v-textarea
+                  label="Skills generated text"
+                  v-model="skillGenerated"
+                  variant="filled"
+                  rows="15"
+                  auto-grow
+                ></v-textarea>
+              </v-col>
+            </v-row> 
+          </v-card>
+        </template>
