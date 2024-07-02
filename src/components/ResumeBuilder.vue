@@ -71,6 +71,121 @@
           </v-card>
         </template>
         
+        
+
+        <template v-slot:item.2>
+          <v-card title="Education" >
+            <br/>
+            <v-row class="ml-3">
+              <v-col cols="4"  class="border border-md">
+                <v-row>
+                  <v-col cols="6">
+                    <v-text-field
+                      v-model="degree"
+                      class="mb-2"
+                      label="Degree"
+                      hide-details
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="6">
+                    <v-text-field
+                      v-model="major"
+                      class="mb-2"
+                      label="Major"
+                      hide-details
+                    ></v-text-field>
+                  </v-col>
+                </v-row>
+
+                <v-row>
+                  <v-col cols="6">
+                    <v-text-field
+                      v-model="institution"
+                      class="mb-2"
+                      label="Institution"
+                      hide-details
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="6">
+                    <v-text-field
+                      v-model="location"
+                      class="mb-2"
+                      label="Location"
+                      hide-details
+                    ></v-text-field>
+                  </v-col>
+                </v-row>
+
+                <v-row>
+                  <v-col cols="6">
+                    <v-text-field
+                      v-model="eduStartDate"
+                      class="mb-2"
+                      label="Start Date"
+                      type="date"
+                      hide-details
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="6">
+                    <v-text-field
+                      v-model="eduEndDate"
+                      class="mb-2"
+                      label="End Date"
+                      type="date"
+                      hide-details
+                    ></v-text-field>
+                  </v-col>
+                </v-row>
+
+                <v-row>
+                  <v-col cols="6">
+                    <v-text-field
+                      v-model="gpa"
+                      class="mb-2"
+                      label="GPA"
+                      hide-details
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="6">
+                    <v-text-field
+                      v-model="course"
+                      class="mb-2"
+                      label="Course"
+                      hide-details
+                    ></v-text-field>
+                  </v-col>
+                </v-row>
+
+                <v-row>
+                  <v-col cols="5"></v-col>
+                  <v-col cols="7">
+                    <v-btn
+                    color="#711429"
+                    size="large"
+                    variant="elevated"
+                    rounded="xl"
+                  >
+                    Add
+                  </v-btn>
+                  </v-col>
+                </v-row>
+                
+              </v-col>
+              <v-col cols="8">
+                <v-textarea
+                  label="Education generated text"
+                  v-model="educationGenerated"
+                  variant="filled"
+                  rows="15"
+                  auto-grow
+                ></v-textarea>
+              </v-col>
+            </v-row> 
+          <br/>
+
+          </v-card>
+        </template>
+
         <template v-slot:item.3>
           <v-card title="Experience">
             <br/>
