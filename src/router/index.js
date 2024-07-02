@@ -1,10 +1,9 @@
-import LoginSignup from '@/components/LoginSignup.vue'
+import LoginSignup from '@/components/LoginPage.vue'
 import SignupPage from '@/components/SignupPage.vue'
-import StoryPage from '@/components/StoryPage.vue'
-import UserProfile from '@/components/UserProfile.vue'
-import StoryEdit from '@/components/StoryEdit.vue'
-import AdminPage from '@/components/AdminPage.vue'
+import ResumePage from '@/components/ResumePage.vue'
+import HomePage from '@/components/HomePage.vue'
 import {createRouter, createWebHistory} from 'vue-router'
+import { components } from 'vuetify/dist/vuetify-labs.js'
 
 const routes = [
     {
@@ -16,21 +15,8 @@ const routes = [
         component: SignupPage
     },
     {
-        path: '/story',
-        component: StoryPage
-    },
-    {
-        path: '/profile',
-        component: UserProfile
-    },
-    {
-        path: '/editstory',
-        component: StoryEdit,
-        props: true
-    },
-    {
-        path: '/admin',
-        component: AdminPage
+        path: '/resume',
+        component: ResumePage
     }
 ]
 
