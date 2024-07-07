@@ -71,6 +71,21 @@
         </v-card>
       </template>
 
+<template v-slot:item.2>
+        <v-card title="Professional Summary" >
+          <br/>
+          <v-row class="ml-3">
+            <v-textarea
+                label="Professional Summary"
+                v-model="professionalSummary"
+                variant="filled"
+                rows="15"
+                auto-grow
+              ></v-textarea>
+          </v-row> 
+          <br/>
+        </v-card>
+      </template>
 
       <template v-slot:item.2>
         <v-card title="Education" >
@@ -487,3 +502,4 @@ import { CohereClient } from "cohere-ai"
     }
   }
 </script>
+
