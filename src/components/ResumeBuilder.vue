@@ -357,7 +357,111 @@
             </v-row> 
           </v-card>
         </template>
+        <template v-slot:item.6>
+          <v-card title="Honors/Awards">
+            <br/>
+            <v-row class="ml-3 mb-3">
+              <v-col cols="4"  class="border border-md">
+                <v-row>
+                  <v-col cols="6">
+                    <v-text-field
+                      v-model="honorOrAward"
+                      class="mb-2"
+                      label="Honor / Award"
+                      hide-details
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="6">
+                    <v-text-field
+                      v-model="honorOrg"
+                      class="mb-2"
+                      label="Organization"
+                      hide-details
+                    ></v-text-field>
+                  </v-col>
+                </v-row>
 
+                <v-row>
+                  <v-col cols="6">
+                    <v-text-field
+                      v-model="honorStartDate"
+                      class="mb-2"
+                      label="Start Date (MMM,YYYY)"
+                      hide-details
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="6">
+                    <v-text-field
+                      v-model="honorEndDate"
+                      class="mb-2"
+                      label="End Date (MMM,YYYY)"
+                      hide-details
+                    ></v-text-field>
+                  </v-col>
+                </v-row>
+
+                <v-row>
+                  <v-col cols="4">
+                    <v-btn
+                      color="#711429"
+                      variant="elevated"
+                      rounded="xl"
+                      @click="this.honorNotesOverlay = !this.honorNotesOverlay"
+                      block
+                    >
+                      Notes
+                    </v-btn>
+                  </v-col>
+                  <v-col cols="4">
+                    <v-btn
+                    color="#711429"
+                    variant="elevated"
+                    rounded="xl"
+                    @click="clearHonorFeilds"
+                    block
+                    >
+                      Clear
+                    </v-btn>
+                  </v-col>
+                  <v-col cols="4">
+                    <v-btn
+                    color="#711429"
+                    variant="elevated"
+                    rounded="xl"
+                    @click="addHonor"
+                    block
+                    >
+                      Add
+                    </v-btn>
+                  </v-col>
+                </v-row>
+                
+              </v-col>
+
+              <v-col cols="8">
+                <p>Added Honors/Awards: </p>
+                <br/>
+                <v-row v-for="(honor,index) in selectedHonors">
+                  <v-col cols="1"><v-icon color="#fff" > mdi-arrow-right  </v-icon></v-col>
+                  <v-col cols="9">
+                    <div>
+                      <h3>{{honor.honorOrg}}</h3>
+                      <p>{{ honor.honorOrAward }} || {{ honor.honorStartDate }} - {{ honor.honorEndDate }}</p>
+                      <p v-for="note in honor.honorNotes">&nbsp;&nbsp;- {{ note }}</p>
+                    </div>
+                  </v-col>
+                  <v-col cols="2">
+                    <v-btn size="small" variant="tonal" @click="removeHonor(index)">
+                      <v-icon color="#711429" > mdi-book-open  </v-icon>&nbsp;
+                      Remove
+                    </v-btn>
+                  </v-col>
+                  <v-divider></v-divider>
+                </v-row>
+              </v-col>
+            </v-row> 
+          </v-card>
+        </template>
         <template v-slot:item.7>
           <v-card title="Skills" flat>
             <br/>
@@ -1325,6 +1429,52 @@
           this.jobStartDate = ""
           this.jobEndDate = ""
           this.experienceNote = []
+        },
+        addHonor(){
+          var honorDetail = {
+            honorOrAward: this.honorOrAward,
+            honorOrg: this.honorOrg,
+            honorStartDate: this.honorStartDate,
+            honorEndDate: this.honorEndDate,
+            honorNotes: this.honorNotes
+          }
+          this.selectedHonors.push(honorDetail)
+          this.clearHonorFeilds()
+        },
+        removeHonor(index){
+            if(this.selectedHonors.length > 1){
+              console.log(index)
+              this.selectedHonors.splice(index, 1);
+            }
+            else{
+              this.selectedHonors = []
+            }
+        },
+        addHonorNote(){
+          if(this.currentHonorNote != ""){
+            this.honorNotes.push(this.currentHonorNote)
+            this.currentHonorNote = ""
+          }
+        },
+        removeHonorNote(note){
+          if(note != ""){
+            if(this.honorNotes.length > 1){
+              var index = this.honorNotes.indexOf(note);
+              console.log(note)
+              console.log(index)
+              this.honorNotes.splice(index, 1);
+            }
+            else{
+              this.honorNotes = []
+            }
+          }
+        },
+        clearHonorFeilds(){
+          this.honorOrAward = ""
+          this.honorOrg = ""
+          this.honorStartDate = ""
+          this.honorEndDate = ""
+          this.honorNotes = []
         },
         
         addProject(){
