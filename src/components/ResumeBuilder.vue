@@ -1052,6 +1052,70 @@
       {{ snackbarMSG }}
     </v-snackbar>
   </template>
+  <v-card flat v-if="tempalte == 'Template 2' && showTemplate" width="70%" color="#fff">
+            <vue-html2pdf
+            :show-layout="false"
+            :preview-modal="true"
+            :paginate-elements-by-height="10"
+            :pdf-quality="2"
+            pdf-format="a4"
+            :ref="ref"
+            id= "template2ResumePDF"
+          >
+                  <section class="pdf-item">
+                    <v-card class="mx-auto px-10 py-8 overflow-y-auto" color="#fff">
+                      <div>
+                        <h2>{{ resumeDetails.fullName }}</h2>
+                        <p>{{ resumeDetails.location }} | {{ resumeDetails.phoneNumber }} | {{ resumeDetails.email }} | {{ resumeDetails.email }}</p>
+                      </div>
+
+                      <div>
+                        <br/>
+                        <h3>Professional Summary</h3>
+                        <p>
+                          {{ resumeDetails.professionalSummary }}
+                        </p>
+                      </div>
+
+                      <div>
+                        <br/>
+                        <h3>Education</h3>
+                        <div v-for="edu in resumeDetails.educationDetails">
+                          <br/>
+                          <v-row class="px-3">
+                            <p style="font-size:16px;">
+                              <b>{{ edu.instituteName }}, {{ edu.location }} </b> | {{ edu.startDate }} - {{ edu.endDate }}
+                            </p>
+                          </v-row>
+                          <br style="line-height:0px;margin: 6px 0;display: block;"/>
+                          <div style="font-size:14px;">
+                            <p>{{ edu.degree }}</p>
+                            <p>GPA: {{ edu.gpa }}</p>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div>
+                        <br/>
+                        <h3>Experience</h3>
+                        <div v-for="experience in resumeDetails.experienceDetails">
+                          <br/>
+                          <v-row class="px-3">
+                            <p  style="font-size:16px;">
+                              <b>{{ experience.roleName }}, {{ experience.orgName }}</b> | {{ experience.startDate }} - {{ experience.endDate }}
+                            </p>
+                          </v-row>
+                          <br style="line-height:0px;margin: 6px 0;display: block;"/>
+                          <div style="font-size:14px;">
+                            <p v-for="note in experience.experienceNotes">●	{{ note }}</p>
+                          </div>
+                        </div>
+                      </div>
+                    </v-card>
+            </section>
+          </vue-html2pdf>
+          </v-card>
+
   <v-card flat v-if="tempalte == 'Template 3' && showTemplate" width="70%" color="#fff">
             <vue-html2pdf
             :show-layout="false"
