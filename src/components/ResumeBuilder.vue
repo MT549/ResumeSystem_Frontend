@@ -948,6 +948,121 @@
       {{ snackbarMSG }}
     </v-snackbar>
   </template>
+  <v-card flat v-if="tempalte == 'Template 3' && showTemplate" width="70%" color="#fff">
+            <vue-html2pdf
+            :show-layout="false"
+            :preview-modal="true"
+            :paginate-elements-by-height="10"
+            :pdf-quality="2"
+            pdf-format="a4"
+            :ref="ref"
+            id= "template3ResumePDF"
+          >
+                  <section class="pdf-item">
+                    <v-card class="mx-auto px-10 py-8 overflow-y-auto" color="#fff">
+                      <div style="text-align:center;">
+                        <h2>{{ resumeDetails.fullName }}</h2>
+                        <p>{{ resumeDetails.location }} | {{ resumeDetails.phoneNumber }} | {{ resumeDetails.email }} | {{ resumeDetails.websiteURL }}</p>
+                        <hr/>
+                      </div>
+
+                      <div>
+                        <br/>
+                        <p>
+                          {{ resumeDetails.professionalSummary }}
+                        </p>
+                      </div>
+
+                      <div>
+                        <br/>
+                        <h3>EDUCATION</h3>
+                        <hr/>
+                        <div v-for="edu in resumeDetails.educationDetails">
+                          <br/>
+                          <v-row class="px-3">
+                            <p style="font-size:16px;">
+                              <b>{{ edu.instituteName }}, {{ edu.location }} </b>
+                            </p>
+                            <v-spacer></v-spacer>
+                            <p style="font-size:14px;">
+                              {{ edu.startDate }} - {{ edu.endDate }}
+                            </p>
+                          </v-row>
+                          <br style="line-height:0px;margin: 6px 0;display: block;"/>
+                          <div style="font-size:14px;">
+                            <p>{{ edu.degree }}</p>
+                            <p>GPA: {{ edu.gpa }}</p>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div>
+                        <br/>
+                        <h3>EXPERIENCE</h3>
+                        <hr/>
+                        <div v-for="experience in resumeDetails.experienceDetails">
+                          <br/>
+                          <v-row class="px-3">
+                            <p  style="font-size:16px;">
+                              <b>{{ experience.orgName }}, {{ experience.location }} </b>
+                            </p>
+                            <v-spacer></v-spacer>
+                            <p>
+                              {{ experience.startDate }} - {{ experience.endDate }}
+                            </p>
+                          </v-row>
+                          <v-row class="px-3">
+                            <p  style="font-size:16px;">{{ experience.roleName }}</p>
+                          </v-row>
+
+                          <br style="line-height:0px;margin: 6px 0;display: block;"/>
+                          <div style="font-size:14px;">
+                            <p v-for="note in experience.experienceNotes">●	{{ note }}</p>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div>
+                        <br/>
+                        <h3>PROJECTS</h3>
+                        <hr/>
+                        <div v-for="project in resumeDetails.projectDetails">
+                          <br/>
+                          <v-row class="px-3">
+                            <p  style="font-size:16px;">
+                              <b>{{ project.orgName }}, {{ project.location }} </b>
+                            </p>
+                            <v-spacer></v-spacer>
+                            <p>
+                              {{ project.startDate }} - {{ project.endDate }}
+                            </p>
+                          </v-row>
+                          <v-row class="px-3">
+                            <p  style="font-size:16px;">{{ project.projectName }}</p>
+                          </v-row>
+
+                          <br style="line-height:0px;margin: 6px 0;display: block;"/>
+                          <div style="font-size:14px;">
+                            <p v-for="note in project.projectNotes">●	{{ note }}</p>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div>
+                        <br/>
+                        <h3>SKILLS</h3>
+                        <hr/>
+                        <p>{{ formatSkills(resumeDetails.skills) }}</p>
+
+                      </div>
+                    </v-card>
+            </section>
+          </vue-html2pdf>
+          </v-card>
+        </template>
+      </v-stepper>
+    </v-container>
+    <br/>
   
   <script>
   import html2pdf from "html2pdf.js";
