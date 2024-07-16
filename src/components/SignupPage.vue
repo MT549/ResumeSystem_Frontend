@@ -111,22 +111,11 @@
           <v-row>
             <v-col cols="12">
               <v-text-field
-                v-model="linkedinURL"
+                v-model="location"
                 :readonly="loading"
                 class="mb-2"
                 clearable
-                label="Linkedin URL"
-              ></v-text-field>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col cols="12">
-              <v-text-field
-                v-model="websiteURL"
-                :readonly="loading"
-                class="mb-2"
-                clearable
-                label="website URL"
+                label="Location"
               ></v-text-field>
             </v-col>
           </v-row>
@@ -186,8 +175,7 @@ import AuthenticationService from '@/services/UserAuthenticationService'
       password: null,
       passwordConfirm: null,
       phoneNumber: null,
-      websiteURL: null,
-      linkedinURL: null,
+      location: null,
       gender: null,
       genderItem: ['Male','Female','Other'],
       loading: false,
@@ -245,8 +233,7 @@ import AuthenticationService from '@/services/UserAuthenticationService'
               gender: this.gender,
               password: this.password,
               permission: "User",
-              linkedinURL: this.linkedinURL,
-              websiteURL: this.websiteURL
+              location: this.location
           }).then((response)=> {
                 console.log(response)
                 if(response.statusText == "OK"){

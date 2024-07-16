@@ -125,12 +125,14 @@ import AuthenticationService from '@/services/UserAuthenticationService'
                   this.$store.commit('setPermission', response.data.permission)
                   this.$store.commit('setIsUserLoggedIn', true)
 
-                  sessionStorage.setItem('UserId', response.data.email)
+                  sessionStorage.setItem('UserId', response.data.id)
+                  sessionStorage.setItem('UserEmail', response.data.email)
                   sessionStorage.setItem('UserName', response.data.firstName + " " + response.data.lastName)
                   sessionStorage.setItem('UserPermission', response.data.permission)
                   sessionStorage.setItem('IsUserLoggedIn', true)
                   sessionStorage.setItem('sessionId', response.data.sessionId)
                   console.log(sessionStorage.getItem('UserId'))
+                  console.log(sessionStorage.getItem('UserEmail'))
                   console.log(sessionStorage.getItem('UserName'))
                   console.log(sessionStorage.getItem('UserPermission'))
                   console.log(sessionStorage.getItem('IsUserLoggedIn'))
@@ -141,7 +143,7 @@ import AuthenticationService from '@/services/UserAuthenticationService'
                     setTimeout(() => (router.push('/admin')), 800)
                   }
                   else{
-                    setTimeout(() => (router.push('/resume')), 800)
+                    setTimeout(() => (router.push('/')), 800)
                   }
                 }
               }
