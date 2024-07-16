@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-main>
-      <HomePage :key="this.$store.state.isUserLoggedIn"/>
+      <HomePage/>
       <router-view/>
     </v-main>
   </v-app>
