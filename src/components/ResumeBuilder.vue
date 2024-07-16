@@ -1926,7 +1926,43 @@
           return formattedSkills
         },
 
-        
+        async saveOnClick() {
+            try{
+              this.setLoadingOverLay(true, "Please wait. Resume is being saved...")
+              await ResumeService.saveResume({
+                resumeTitle: this.resumeTitle,
+                UserID: this.$store.state.UserId,
+                fullName: this.resumeDetails.fullName,
+                location: this.resumeDetails.location,
+                phoneNumber: this.resumeDetails.phoneNumber,
+                email: this.resumeDetails.email,
+                websiteURL: this.resumeDetails.websiteURL,
+                linkedinURL: this.resumeDetails.linkedinURL,
+                professionalSummary: this.resumeDetails.professionalSummary,
+                templaterType: this.tempalte,
+                educationDetails: this.resumeDetails.educationDetails,
+                experienceDetails: this.resumeDetails.experienceDetails,
+                projectDetails: this.resumeDetails.projectDetails,
+                skills: this.resumeDetails.skills
+              }).then((response)=> {
+                console.log(response.statusText)
+                if(response.statusText == "OK"){
+                    if(response.data.status == "OK"){
+                        this.showSnackBar("Resume Saved.")
+                    }
+                    else{
+                        this.showSnackBar(response.data.error)
+                    }
+                }
+                this.setLoadingOverLay(false, "")
+             })
+          }
+          catch(err){
+            console.log(err)
+            this.setLoadingOverLay(false, "")
+          }
+        },
+         
         exportToPDF() {
           this.opt.filename = this.resumeTitle != "" ? this.resumeTitle + ".pdf" : "myresume.pdf"
           var currentTemplate = ""
