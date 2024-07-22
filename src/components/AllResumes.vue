@@ -1,0 +1,255 @@
+<template>
+    <div>
+        <v-row class="text-right"> 
+            <v-col col="12" mb="2">
+                <v-btn
+                prepend-icon="mdi-account-circle"
+                @click="refreshResumes = !refreshResumes"
+                >
+                <template v-slot:prepend>
+                    <v-icon color="#711429">mdi-refresh</v-icon>
+                </template>
+                    Refresh
+                </v-btn>
+            </v-col>
+        </v-row>
+        <v-list v-show="this.resumes.length > 0">
+            <v-list-group no-action v-for='resume in resumes' :key="resume.id">
+                <template v-slot:activator="{ props }">
+                    <v-list-item slot='activator' v-bind="props">
+                        <v-list-item-title>{{ resume.resumeTitle }}</v-list-item-title>
+                    </v-list-item>
+                </template>
+
+                <v-list-item
+                    v-for="ver in resume.ResumeVersionControls"
+                    :key="ver.version"
+                    :title= setVersion(ver.version)
+                    prepend-icon="mdi-arrow-right"
+                >
+                    <template v-slot:append>
+                    <v-btn size="small" variant="tonal" @click="openResumeOverlay(ver)">
+                        <v-icon color="#711429" > mdi-book-open  </v-icon>&nbsp;
+                        Open
+                    </v-btn>
+                    &nbsp;
+                    </template>
+                    <v-divider color="#fff"></v-divider>
+                </v-list-item>
+            </v-list-group>
+        </v-list>
+        <h1 v-show="this.resumes.length < 1">No Resumes to show.</h1>
+    </div>
+    
+    <v-overlay
+      :model-value="loadingOverlay"
+      class="align-center justify-center"
+      :persistent="diableOverlay"
+    >
+        <v-progress-circular
+            color="#711429"
+            indeterminate
+            size="64"
+            class="align-center"
+        ></v-progress-circular>
+        <h3>{{loadingMSG}}</h3>
+    </v-overlay>
+
+    <v-overlay
+      :model-value="resumeOverlay"
+      class="align-center justify-center"
+      persistent
+    >
+      <v-card class="mx-auto px-10 py-5" width="850px" height="50px" color="#711429">
+        <v-row>
+                <v-btn
+                    @click=""
+                    color="#121212"
+                >
+                    Edit    
+                </v-btn>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <v-btn
+                    @click="exportToPDF"
+                    color="#121212"
+                >
+                    Download
+                </v-btn>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <v-btn
+                    @click=""
+                    color="#121212"
+                >
+                    Delete
+                </v-btn>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <v-btn
+                    @click="this.resumeOverlay = !this.resumeOverlay"
+                    color="#121212"
+                >
+                    close
+                </v-btn>
+        </v-row>
+      <br/>
+      </v-card>
+
+    
+
+      <v-card flat v-if="tempalte == 'Template 1' && showTemplate" width="850px" color="#fff">
+          <v-infinite-scroll
+              height="700"
+              mode="manual"
+          >
+        <vue-html2pdf
+        :show-layout="false"
+        :preview-modal="true"
+        :paginate-elements-by-height="10"
+        :pdf-quality="2"
+        pdf-format="a4"
+        :ref="ref"
+        id= "template1ResumePDF"
+        >
+                  <section class="pdf-item">
+                    <v-card class="mx-auto px-10 py-8 overflow-y-auto" color="#fff">
+                      <div style="text-align:center;">
+                        <h2>{{ resumeDetails.fullName }}</h2>
+                        <p>{{ resumeDetails.location }} | {{ resumeDetails.phoneNumber }} | {{ resumeDetails.email }} | {{ linkedinURL }} / {{ websiteURL }}</p>
+                      </div>
+
+                      <div>
+                        <br/>
+                        <h3>PROFESSIONAL SUMMARY</h3>
+                        <hr/>
+                        <p>
+                          {{ resumeDetails.professionalSummary }}
+                        </p>
+                      </div>
+
+                      <div>
+                        <br/>
+                        <h3>EDUCATION</h3>
+                        <hr/>
+                        <div v-for="edu in resumeDetails.EducationDetails">
+                          <br/>
+                          <v-row class="px-3">
+                            <p style="font-size:16px;">
+                              <b>{{ edu.instituteName }}, {{ edu.location }} </b>
+                            </p>
+                            <v-spacer></v-spacer>
+                            <p style="font-size:14px;">
+                              {{ edu.startDate }} - {{ edu.endDate }}
+                            </p>
+                          </v-row>
+                          <br style="line-height:0px;margin: 6px 0;display: block;"/>
+                          <div style="font-size:14px;">
+                            <p>{{ edu.degree }}</p>
+                            <p>GPA: {{ edu.gpa }}</p>
+                            <p>Awards: {{ formatcomma(edu.Awards) }}</p>
+                            <p>Courses: {{ formatcomma(edu.Courses) }}</p>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div>
+                        <br/>
+                        <h3>PROFESSIONAL EXPERIENCE</h3>
+                        <hr/>
+                        <div v-for="experience in resumeDetails.ExperienceDetails">
+                          <br/>
+                          <v-row class="px-3">
+                            <p  style="font-size:16px;">
+                              <b>{{ experience.orgName }}, {{ experience.roleName }}, {{ experience.location }} </b>
+                            </p>
+                            <v-spacer></v-spacer>
+                            <p>
+                              Date ({{ experience.startDate }} - {{ experience.endDate }})
+                            </p>
+                          </v-row>
+                          <br style="line-height:0px;margin: 6px 0;display: block;"/>
+                          <div style="font-size:14px;">
+                            <p v-for="note in experience.ExperienceNotes">●	{{ note.description }}</p>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div>
+                        <br/>
+                        <h3>SKILLS | LEADERSHIP SKILLS | ACTIVITIES | EXTRACURRICULAR ACTIVITIES</h3>
+                        <hr/>
+                        <p v-for="skill in resumeDetails.Skills">●	{{ skill.Name }} : {{ skill.level }}</p>
+
+                      </div>
+                    </v-card>
+            </section>
+        </vue-html2pdf>
+    </v-infinite-scroll>
+          </v-card>
+
+          <v-card flat v-if="tempalte == 'Template 2' && showTemplate" width="850px" color="#fff">
+            <v-infinite-scroll
+                  height="700"
+                  mode="manual"
+              >
+            <vue-html2pdf
+            :show-layout="false"
+            :preview-modal="true"
+            :paginate-elements-by-height="10"
+            :pdf-quality="2"
+            pdf-format="a4"
+            :ref="ref"
+            id= "template2ResumePDF"
+          >
+                  <section class="pdf-item">
+                    <v-card class="mx-auto px-10 py-8 overflow-y-auto" color="#fff">
+                      <div>
+                        <h2>{{ resumeDetails.fullName }}</h2>
+                        <p>{{ resumeDetails.location }} | {{ resumeDetails.phoneNumber }} | {{ resumeDetails.email }} | {{ linkedinURL }}/{{ websiteURL }}</p>
+                      </div>
+
+                      <div>
+                        <br/>
+                        <h3>PROFESSIONAL SUMMARY</h3>
+                        <p>
+                          {{ resumeDetails.professionalSummary }}
+                        </p>
+                      </div>
+
+                      <div>
+                        <br/>
+                        <h3>EDUCATION</h3>
+                        <div v-for="edu in resumeDetails.EducationDetails">
+                          <br/>
+                          <v-row class="px-3">
+                            <p style="font-size:16px;">
+                              <b>{{ edu.instituteName }}, {{ edu.location }} </b> | {{ edu.startDate }} - {{ edu.endDate }}
+                            </p>
+                          </v-row>
+                          <br style="line-height:0px;margin: 6px 0;display: block;"/>
+                          <div style="font-size:14px;">
+                            <p>{{ edu.degree }}</p>
+                            <p>GPA: {{ edu.gpa }}</p>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div>
+                        <br/>
+                        <h3>EXPERIENCE</h3>
+                        <div v-for="experience in resumeDetails.ExperienceDetails">
+                          <br/>
+                          <v-row class="px-3">
+                            <p  style="font-size:16px;">
+                              <b>{{ experience.roleName }}, {{ experience.orgName }}</b> | {{ experience.startDate }} - {{ experience.endDate }}
+                            </p>
+                          </v-row>
+                          <br style="line-height:0px;margin: 6px 0;display: block;"/>
+                          <div style="font-size:14px;">
+                            <p v-for="note in experience.ExperienceNotes">●	{{ note.description }}</p>
+                          </div>
+                        </div>
+                      </div>
+                    </v-card>
+            </section>
+        </vue-html2pdf>
+    </v-infinite-scroll>
+          </v-card>
