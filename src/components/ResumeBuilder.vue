@@ -822,8 +822,7 @@
               </v-col>
             </v-row>
           </v-card>
-
-          <v-card flat v-if="tempalte == 'Template 1' && showTemplate" width="70%" color="#fff">
+<v-card flat v-if="tempalte == 'Template 1' && showTemplate" width="70%" color="#fff">
             <vue-html2pdf
             :show-layout="false"
             :preview-modal="true"
@@ -1084,10 +1083,146 @@
             </section>
           </vue-html2pdf>
           </v-card>
+
+          <v-card flat v-if="tempalte == 'Template 4' && showTemplate" width="70%" color="#fff">
+            <vue-html2pdf
+            :show-layout="false"
+            :preview-modal="true"
+            :paginate-elements-by-height="10"
+            :pdf-quality="2"
+            pdf-format="a4"
+            :ref="ref"
+            id= "template4ResumePDF"
+          >
+                  <section class="pdf-item">
+                    <v-card class="mx-auto px-10 py-8 overflow-y-auto" color="#fff">
+                      <div style="text-align:center;">
+                        <h2>{{ resumeDetails.fullName }}</h2>
+                        <p>{{ resumeDetails.location }} ♦ {{ resumeDetails.phoneNumber }} ♦ {{ resumeDetails.email }} ♦ {{ resumeDetails.linkedinURL }} or {{ resumeDetails.websiteURL }}</p>
+                      </div>
+
+                      <div>
+                        <br/>
+                        <h3>OBJECTIVE</h3>
+                        <p>
+                          {{ resumeDetails.professionalSummary }}
+                        </p>
+                      </div>
+
+                      <div>
+                        <br/>
+                        <h3>EDUCATION</h3>
+                        <div v-for="edu in resumeDetails.educationDetails">
+                          <br style="line-height:0px;margin: 6px 0;display: block;"/>
+                          <v-row class="px-3">
+                            <p style="font-size:16px;">
+                              <b>{{ edu.instituteName }}, {{ edu.location }} </b>
+                            </p>
+                            <v-spacer></v-spacer>
+                            <p style="font-size:14px;">
+                              {{ edu.startDate }} - {{ edu.endDate }}
+                            </p>
+                          </v-row>
+                          <br/>
+                          <v-row class="px-3">
+                            <p style="font-size:14px;">{{ edu.degree }}</p>
+                          </v-row>
+                          <v-row class="px-3">
+                            <p style="font-size:14px;">Cumulative GPR: {{ edu.gpa }}</p>
+                          </v-row>
+                          <v-row class="px-3">
+                            <p>Coursework: {{ edu.courses.toString() }}</p>
+                          </v-row>
+                        </div>
+                      </div>
+
+                      <div>
+                        <br/>
+                        <h3>LEADERSHIP (or WORK EXPERIENCE, ACTIVITIES, VOLUNTEER WORK)</h3>
+                        <div v-for="leadership in resumeDetails.leadershipDetails">
+                          <br style="line-height:0px;margin: 6px 0;display: block;"/>
+                          <v-row class="px-3">
+                            <p  style="font-size:16px;">
+                              <b>{{ leadership.orgName }}</b>
+                            </p>
+                            <v-spacer></v-spacer>
+                            <p>
+                              {{ leadership.startDate }} - {{ leadership.endDate }}
+                            </p>
+                          </v-row>
+                          <v-row class="px-3">
+                            <p  style="font-size:16px;">{{ leadership.leadershipPosition }}</p>
+                          </v-row>
+
+                          <br style="line-height:0px;margin: 6px 0;display: block;"/>
+                          <div style="font-size:14px;">
+                            <p v-for="note in leadership.leadershipNotes">●	{{ note }}</p>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div>
+                        <br/>
+                        <h3>WORK EXPERIENCE (or LEADERSHIP, ACTIVITIES, VOLUNTEER WORK)</h3>
+                        <div v-for="experience in resumeDetails.experienceDetails">
+                          <br style="line-height:0px;margin: 6px 0;display: block;"/>
+                          <v-row class="px-3">
+                            <p  style="font-size:16px;">
+                              <b>{{ experience.orgName }}, {{ experience.location }} </b>
+                            </p>
+                            <v-spacer></v-spacer>
+                            <p>
+                              {{ experience.startDate }} - {{ experience.endDate }}
+                            </p>
+                          </v-row>
+                          <v-row class="px-3">
+                            <p  style="font-size:16px;">{{ experience.roleName }}</p>
+                          </v-row>
+
+                          <br style="line-height:0px;margin: 6px 0;display: block;"/>
+                          <div style="font-size:14px;">
+                            <p v-for="note in experience.experienceNotes">●	{{ note }}</p>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div>
+                        <br/>
+                        <h3>HONORS (and/or AWARDS)</h3>
+                        <div v-for="honor in resumeDetails.honorDetails">
+                          <br style="line-height:0px;margin: 6px 0;display: block;"/>
+                          <v-row class="px-3">
+                            <p  style="font-size:16px;">
+                              <b>{{ honor.name }}/{{ honor.honorOrg }} </b>
+                            </p>
+                            <v-spacer></v-spacer>
+                            <p>
+                              {{ honor.startDate }} - {{ honor.endDate }}
+                            </p>
+                          </v-row>
+                          <br style="line-height:0px;margin: 6px 0;display: block;"/>
+                          <div style="font-size:14px;">
+                            <p v-for="note in honor.honorNotes">●	{{ note }}</p>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div>
+                        <br/>
+                        <h3>SKILLS</h3>
+                        <p v-for="skill in resumeDetails.skills">●	{{ skill.name }} : {{ skill.level }}</p>
+                      </div>
+
+                    </v-card>
+            </section>
+          </vue-html2pdf>
+          </v-card>
+
         </template>
       </v-stepper>
     </v-container>
     <br/>
+
 
     <v-overlay
       :model-value="awardsOverlay"
