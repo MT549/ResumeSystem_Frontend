@@ -580,7 +580,7 @@
                   <v-col cols="9">
                     <div>
                       <h3>{{honor.honorOrg}}</h3>
-                      <p>{{ honor.honorOrAward }} || {{ honor.honorStartDate }} - {{ honor.honorEndDate }}</p>
+                      <p>{{ honor.name }} || {{ honor.startDate }} - {{ honor.endDate }}</p>
                       <p v-for="note in honor.honorNotes">&nbsp;&nbsp;- {{ note }}</p>
                     </div>
                   </v-col>
@@ -666,6 +666,14 @@
         </template>
 
         <template v-slot:item.8>
+          <v-alert
+            variant="outlined"
+            type="warning"
+            prominent
+            border="top"
+          >
+            This section is only applicable for Template 3
+          </v-alert>
           <v-card title="Projects">
             <br/>
             <v-row class="ml-3 mb-3">
@@ -705,7 +713,7 @@
                     <v-text-field
                       v-model="projectStartDate"
                       class="mb-2"
-                      label="Start Date (MMM,YYYY)"
+                      label="Start Date (mmm/yyyy or mm/dd/yyyy)"
                       hide-details
                     ></v-text-field>
                   </v-col>
@@ -713,7 +721,7 @@
                     <v-text-field
                       v-model="projectEndDate"
                       class="mb-2"
-                      label="End Date (MMM,YYYY)"
+                      label="End Date (mmm/yyyy or mm/dd/yyyy)"
                       hide-details
                     ></v-text-field>
                   </v-col>
