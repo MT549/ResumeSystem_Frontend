@@ -292,7 +292,7 @@
                     <v-text-field
                       v-model="jobStartDate"
                       class="mb-2"
-                      label="Start Date (MMM,YYYY)"
+                      label="Start Date (mmm/yyyy or mm/dd/yyyy)"
                       hide-details
                     ></v-text-field>
                   </v-col>
@@ -300,7 +300,7 @@
                     <v-text-field
                       v-model="jobEndDate"
                       class="mb-2"
-                      label="End Date (MMM,YYYY)"
+                      label="End Date (mmm/yyyy or mm/dd/yyyy)"
                       hide-details
                     ></v-text-field>
                   </v-col>
@@ -370,6 +370,14 @@
         </template>
 
         <template v-slot:item.5>
+          <v-alert
+            variant="outlined"
+            type="warning"
+            prominent
+            border="top"
+          >
+            This section is only applicable for Template 4
+          </v-alert>
           <v-card title="Leadership">
             <br/>
             <v-row class="ml-3 mb-3">
@@ -398,7 +406,7 @@
                     <v-text-field
                       v-model="leadershipStartDate"
                       class="mb-2"
-                      label="Start Date (MMM,YYYY)"
+                      label="Start Date (mmm/yyyy or mm/dd/yyyy)"
                       hide-details
                     ></v-text-field>
                   </v-col>
@@ -406,7 +414,7 @@
                     <v-text-field
                       v-model="leadershipEndDate"
                       class="mb-2"
-                      label="End Date (MMM,YYYY)"
+                      label="End Date (mmm/yyyy or mm/dd/yyyy)"
                       hide-details
                     ></v-text-field>
                   </v-col>
@@ -457,8 +465,8 @@
                   <v-col cols="1"><v-icon color="#fff" > mdi-arrow-right  </v-icon></v-col>
                   <v-col cols="9">
                     <div>
-                      <h3>{{leadership.leadershipOrgName}}</h3>
-                      <p>{{ leadership.leadershipPosition }} ( {{ leadership.leadershipStartDate }} - {{ leadership.leadershipEndDate }} )</p>
+                      <h3>{{leadership.orgName}}</h3>
+                      <p>{{ leadership.leadershipPosition }} ( {{ leadership.startDate }} - {{ leadership.endDate }} )</p>
                       <p v-for="note in leadership.leadershipNotes">&nbsp;&nbsp;- {{ note }}</p>
                     </div>
                   </v-col>
@@ -476,6 +484,14 @@
         </template>
 
         <template v-slot:item.6>
+          <v-alert
+            variant="outlined"
+            type="warning"
+            prominent
+            border="top"
+          >
+            This section is only applicable for Template 4
+          </v-alert>
           <v-card title="Honors/Awards">
             <br/>
             <v-row class="ml-3 mb-3">
@@ -504,7 +520,7 @@
                     <v-text-field
                       v-model="honorStartDate"
                       class="mb-2"
-                      label="Start Date (MMM,YYYY)"
+                      label="Start Date (mmm/yyyy or mm/dd/yyyy)"
                       hide-details
                     ></v-text-field>
                   </v-col>
@@ -512,7 +528,7 @@
                     <v-text-field
                       v-model="honorEndDate"
                       class="mb-2"
-                      label="End Date (MMM,YYYY)"
+                      label="End Date (mmm/yyyy or mm/dd/yyyy)"
                       hide-details
                     ></v-text-field>
                   </v-col>
