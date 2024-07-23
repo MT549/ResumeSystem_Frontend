@@ -253,3 +253,112 @@
         </vue-html2pdf>
     </v-infinite-scroll>
           </v-card>
+          methods: {
+            onLoad(){
+                this.linkedinURL = sessionStorage.getItem('UserLinkedinURL')
+                this.websiteURL = sessionStorage.getItem('UserWebsiteURL')
+
+                this.loadingOverlay = true
+                this.getResumes()
+            },
+            setVersion(version){
+                return "Version: " + version
+            },
+            openResumeOverlay(resume){
+                console.log(resume)
+                this.resumeDetails = resume
+                this.resumeOverlay = !this.resumeOverlay
+                this.showTemplate = true
+                this.tempalte = resume.templaterType
+                this.tempalte = "Template 1"
+            },
+            closeResumeOverlay(){
+
+            },
+
+            async getResumes() {
+                //this.$store.state.isUserLoggedIn
+                try{
+                    this.setLoadingOverLay(true, "Please wait. While fetching your resumes...")
+                    console.log(sessionStorage.getItem("UserId"))
+                    await ResumeService.getResumes(sessionStorage.getItem("UserId")).then((response)=> {
+                        console.log(response)
+                        if(response.statusText == "OK"){
+                            this.resumes = response.data
+                            console.log("resume length: "+response.data.length)
+                        }
+                        this.setLoadingOverLay(false, "")
+                    })
+                }
+                catch(err){
+                    console.log(err)
+                    this.setLoadingOverLay(false, "")
+                }
+            },
+             
+            exportToPDF() {
+                this.opt.filename = this.resumeDetails.resumeTitle != "" ? this.resumeDetails.resumeTitle + "_V" + this.resumeDetails.version + ".pdf" : "myresume.pdf"
+                var currentTemplate = ""
+                switch(this.tempalte){
+                    case "Template 1": currentTemplate = "template1ResumePDF" 
+                    break;
+                    case "Template 2": currentTemplate = "template2ResumePDF" 
+                    break;
+                    case "Template 3": currentTemplate = "template3ResumePDF" 
+                    break;
+                    case "Template 4": currentTemplate = "template4ResumePDF" 
+                    break;
+                    default: currentTemplate = "template1ResumePDF" 
+                    break; 
+                }
+                html2pdf().set(this.opt).from(document.getElementById(currentTemplate)).save()
+            },
+            setLoadingOverLay(isShow, message){
+                if(isShow){
+                    this.loadingOverlay = true
+                    this.loadingMSG = message
+                }
+                else{
+                    this.loadingOverlay = false
+                    this.loadingMSG = null
+                }
+            },
+
+            
+            formatSkills(skills){
+            var formattedSkills = ""
+            skills.forEach(element => {
+                if(formattedSkills != ""){
+                formattedSkills = formattedSkills + " | " + element.Name
+                }
+                else{
+                formattedSkills = element.Name
+                }
+            });
+            return formattedSkills
+            },
+            formatcomma(val){
+                var formattedVal = ""
+                val.forEach(element => {
+                    if(formattedVal != ""){
+                        formattedVal = formattedVal + " , " + element.description
+                    }
+                    else{
+                        formattedVal = element.description
+                    }
+                });
+                return formattedVal
+            }
+        },
+        beforeMount() {
+            this.onLoad()
+        },
+        watch: {
+            refreshResumes: function(){
+                this.loadingOverlay = true
+                this.resumes = []
+                this.getResumes() 
+            }
+        }
+    }
+  </script>
