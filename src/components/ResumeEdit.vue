@@ -1762,7 +1762,7 @@
         resumeTitle: "",
         matchScore: "0"
       }),
-  
+ // Prepopulating values from saved Resume 
       methods: {
         onLoad(){
            if(this.$store.state.resumeDetails != null){
