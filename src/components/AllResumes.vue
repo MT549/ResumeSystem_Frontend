@@ -60,7 +60,9 @@
       class="align-center justify-center"
       persistent
     >
-      <v-card class="mx-auto px-10 py-5" width="850px" height="50px" color="#711429">
+    <v-container fluid fill-height class='d-flex flex-column'>
+      <v-row width="1200px" class='flex-grow-0'>
+        <v-card class="mx-auto px-10 py-5" width="1100px" height="50px" color="#711429">
         <v-row>
                 <v-btn
                     @click="editResume"
@@ -92,8 +94,11 @@
         </v-row>
       <br/>
       </v-card>
+    </v-row>
 
-      <v-card flat v-if="tempalte == 'Template 1' && showTemplate" width="850px" color="#fff">
+      <v-row width="1200px" class='flex-grow-0'>
+        <v-col py="0" px="0">
+          <v-card flat v-if="tempalte == 'Template 1' && showTemplate" width="700px" color="#fff">
           <v-infinite-scroll
               height="700"
               mode="manual"
@@ -183,7 +188,7 @@
     </v-infinite-scroll>
           </v-card>
 
-          <v-card flat v-if="tempalte == 'Template 2' && showTemplate" width="850px" color="#fff">
+          <v-card flat v-if="tempalte == 'Template 2' && showTemplate" width="700px" color="#fff">
             <v-infinite-scroll
                   height="700"
                   mode="manual"
@@ -252,7 +257,7 @@
     </v-infinite-scroll>
           </v-card>
 
-          <v-card flat v-if="tempalte == 'Template 3' && showTemplate" width="850px" color="#fff">
+          <v-card flat v-if="tempalte == 'Template 3' && showTemplate" width="700px" color="#fff">
             <v-infinite-scroll
                 height="700"
                 mode="manual"
@@ -369,7 +374,7 @@
     </v-infinite-scroll>
           </v-card>
 
-          <v-card flat v-if="tempalte == 'Template 4' && showTemplate" width="850px" height="auto" color="#fff">
+          <v-card flat v-if="tempalte == 'Template 4' && showTemplate" width="700px" height="auto" color="#fff">
           <v-infinite-scroll
                 height="700"
                 mode="manual"
@@ -508,9 +513,31 @@
                 </section>
             </vue-html2pdf>
         </v-infinite-scroll>
-        </v-card>
+          </v-card>
+      </v-col>
 
-    </v-overlay>
+      <v-col class="justify-center" py="0"  px="0">
+          <v-card width="380px" class="justify-center">
+            <br/>
+            <div class="text-center">
+              <h4>Match Score:</h4>
+              <h1>{{resumeDetails.matchScore}}</h1>
+            </div>
+            <br/>
+          </v-card>
+          <br style="line-height:0px;margin: 6px 0;display: block;"/>
+
+          <v-card width="380px" >
+            <br/>
+            <div class="text-center">
+              <h4>Comments:</h4>
+            </div>
+            <br/>
+          </v-card>
+      </v-col>
+    </v-row>
+  </v-container>
+  </v-overlay>
 </template>
   
   <script>
