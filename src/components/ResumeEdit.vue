@@ -1762,7 +1762,7 @@
         resumeTitle: "",
         matchScore: "0"
       }),
- // Prepopulating values from saved Resume 
+  
       methods: {
         onLoad(){
            if(this.$store.state.resumeDetails != null){
@@ -2346,3 +2346,142 @@
               else{
                 return
               }
+              
+              if(this.resumeDetails.experienceDetails != null && this.resumeDetails.experienceDetails.length > 0){
+                resumeRequest = resumeRequest + " EXPERIENCE "
+                this.resumeDetails.experienceDetails.forEach(experience => {
+                  resumeRequest = resumeRequest + " " + experience.orgName + " ," + experience.location + " " + experience.startDate + "-" + experience.endDate + " " + experience.roleName + " " + experience.experienceNotes.toString()
+                });
+              }
+              else{
+                return
+              }
+
+              if(this.resumeDetails.projectDetails != null && this.resumeDetails.projectDetails.length > 0){
+                resumeRequest = resumeRequest + " PROJECTS "
+                this.resumeDetails.projectDetails.forEach(project => {
+                  resumeRequest = resumeRequest + " " + project.orgName + " ," + project.location + " " + project.startDate + "-" + project.endDate + " " + project.projectName + " " + experience.roleName + " " + project.projectNotes.toString()
+                });
+              }
+              else{
+                return
+              }
+
+              if(this.resumeDetails.skills != null && this.resumeDetails.skills.length > 0){
+                resumeRequest = resumeRequest + " SKILLS "
+                this.resumeDetails.skills.forEach(skill => {
+                  resumeRequest = resumeRequest + " " + skill.name
+                });
+              }
+              else{
+                return
+              }
+              break;
+            case "Template 4": 
+              resumeRequest = this.resumeDetails.fullName + " " + this.resumeDetails.location + " | " + this.resumeDetails.phoneNumber + " | " + this.resumeDetails.email + " | " + this.resumeDetails.linkedinURL + "/" + this.resumeDetails.websiteURL
+              resumeRequest = resumeRequest + " OBJECTIVE " +  this.resumeDetails.professionalSummary + " EDUCATION " 
+
+              if(this.resumeDetails.educationDetails != null && this.resumeDetails.educationDetails.length > 0){
+                this.resumeDetails.educationDetails.forEach(edu => {
+                  resumeRequest = resumeRequest + " " + edu.instituteName + " ," + edu.location + " " + edu.startDate + "-" + edu.endDate + " " + edu.degree + " GPA: " + edu.gpa + " Courses: " + edu.courses.toString()
+                });
+              }
+              else{
+                return
+              }
+              
+              if(this.resumeDetails.leadershipDetails != null && this.resumeDetails.leadershipDetails.length > 0){
+                resumeRequest = resumeRequest + " LEADERSHIP (or WORK EXPERIENCE, ACTIVITIES, VOLUNTEER WORK) "
+                this.resumeDetails.leadershipDetails.forEach(leadership => {
+                  resumeRequest = resumeRequest + " " + leadership.orgName + " " + leadership.startDate + "-" + leadership.endDate + " " + leadership.leadershipPosition + " " + leadership.leadershipNotes.toString()
+                });
+              }
+              else{
+                return
+              }
+
+              if(this.resumeDetails.experienceDetails != null && this.resumeDetails.experienceDetails.length > 0){
+                resumeRequest = resumeRequest + " WORK EXPERIENCE (or LEADERSHIP, ACTIVITIES, VOLUNTEER WORK) "
+                this.resumeDetails.experienceDetails.forEach(experience => {
+                  resumeRequest = resumeRequest + " " + experience.orgName + " ," + experience.roleName + " ," + experience.location + " Date(" + experience.startDate + "-" + experience.endDate + ") \n" + experience.experienceNotes.toString()
+                });
+              }
+              else{
+                return
+              }
+
+              if(this.resumeDetails.honorDetails != null && this.resumeDetails.honorDetails.length > 0){
+                resumeRequest = resumeRequest + " HONORS (and/or AWARDS) "
+                this.resumeDetails.honorDetails.forEach(honor => {
+                  resumeRequest = resumeRequest + " " + honor.name + "/" + honor.honorOrg + " " + honor.startDate + "-" + honor.endDate + " " + honor.honorNotes.toString()
+                });
+              }
+              else{
+                return
+              }
+              
+              if(this.resumeDetails.skills != null && this.resumeDetails.skills.length > 0){
+                resumeRequest = resumeRequest + " SKILLS "
+                this.resumeDetails.skills.forEach(skill => {
+                  resumeRequest = resumeRequest + " " + skill.name + " : " + skill.level + "\n"
+                });
+              }
+              else{
+                return
+              }
+              break;
+            default:
+              break; 
+          }
+
+          var aiMessage = "Can you give me only the Match score percent without any text for below job description and resume details? Job Description: " + this.resumeDetails.jobdescription + "\n" + resumeRequest
+          try{
+            const cohere = new CohereClient({
+              token: "XtLnyRvwWZxsq2YXfHqIAsSXtdFlwvQwWSGC1BAz",
+            });
+
+            await cohere.chat({
+              chatHistory: [],
+              message: aiMessage,
+              connectors: [{ id: 'web-search' }]
+            }).then((response)=> {
+                console.log(response)
+                if(response.text != null){
+                  console.log(response.text)
+                  this.matchScore = response.text
+                }
+                this.setLoadingOverLay(false, "")
+              })
+          }
+          catch(err){
+            console.log(err)
+            this.setLoadingOverLay(false, "")
+          } 
+        },
+
+        exportToPDF() {
+          this.opt.filename = this.resumeTitle != "" ? this.resumeTitle + ".pdf" : "myresume.pdf"
+          var currentTemplate = ""
+          switch(this.tempalte){
+            case "Template 1": currentTemplate = "template1ResumePDF" 
+            break;
+            case "Template 2": currentTemplate = "template2ResumePDF" 
+            break;
+            case "Template 3": currentTemplate = "template3ResumePDF" 
+            break;
+            case "Template 4": currentTemplate = "template4ResumePDF" 
+            break;
+            default: currentTemplate = "template1ResumePDF" 
+            break; 
+          }
+          html2pdf().set(this.opt).from(document.getElementById(currentTemplate)).save()
+        }
+      },
+      watch: {
+        
+      },
+      beforeMount(){
+        this.onLoad()
+      }
+    }
+  </script>

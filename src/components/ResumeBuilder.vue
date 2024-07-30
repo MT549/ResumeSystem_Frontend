@@ -927,7 +927,7 @@
                               </p>
                               <v-spacer></v-spacer>
                               <p>
-                                Date ({{ experience.startDate }} - {{ experience.endDate }})
+                                ({{ experience.startDate }} - {{ experience.endDate }})
                               </p>
                             </v-row>
                             <br style="line-height:0px;margin: 6px 0;display: block;"/>
