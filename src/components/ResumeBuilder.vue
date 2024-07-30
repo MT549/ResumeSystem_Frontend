@@ -67,6 +67,7 @@
                   class="mb-2"
                   label="Linkedin URL"
                   hide-details
+                  disabled
                 ></v-text-field>
               </v-col>
               <v-col cols="6">
@@ -75,6 +76,7 @@
                   class="mb-2"
                   label="Website URL"
                   hide-details
+                  disabled
                 ></v-text-field>
               </v-col>
             </v-row>
@@ -147,7 +149,7 @@
                     <v-text-field
                       v-model="eduStartDate"
                       class="mb-2"
-                      label="Start Date (MMM,YYYY)"
+                      label="Start Date (mmm/yyyy or mm/dd/yyyy)"
                       hide-details
                     ></v-text-field>
                   </v-col>
@@ -155,7 +157,7 @@
                     <v-text-field
                       v-model="eduEndDate"
                       class="mb-2"
-                      label="End Date (MMM,YYYY)"
+                      label="End Date (mmm/yyyy or mm/dd/yyyy)"
                       hide-details
                     ></v-text-field>
                   </v-col>
@@ -292,7 +294,7 @@
                     <v-text-field
                       v-model="jobStartDate"
                       class="mb-2"
-                      label="Start Date (MMM,YYYY)"
+                      label="Start Date (mmm/yyyy or mm/dd/yyyy)"
                       hide-details
                     ></v-text-field>
                   </v-col>
@@ -300,7 +302,7 @@
                     <v-text-field
                       v-model="jobEndDate"
                       class="mb-2"
-                      label="End Date (MMM,YYYY)"
+                      label="End Date (mmm/yyyy or mm/dd/yyyy)"
                       hide-details
                     ></v-text-field>
                   </v-col>
@@ -370,6 +372,14 @@
         </template>
 
         <template v-slot:item.5>
+          <v-alert
+            variant="outlined"
+            type="warning"
+            prominent
+            border="top"
+          >
+            This section is only applicable for Template 4
+          </v-alert>
           <v-card title="Leadership">
             <br/>
             <v-row class="ml-3 mb-3">
@@ -398,7 +408,7 @@
                     <v-text-field
                       v-model="leadershipStartDate"
                       class="mb-2"
-                      label="Start Date (MMM,YYYY)"
+                      label="Start Date (mmm/yyyy or mm/dd/yyyy)"
                       hide-details
                     ></v-text-field>
                   </v-col>
@@ -406,7 +416,7 @@
                     <v-text-field
                       v-model="leadershipEndDate"
                       class="mb-2"
-                      label="End Date (MMM,YYYY)"
+                      label="End Date (mmm/yyyy or mm/dd/yyyy)"
                       hide-details
                     ></v-text-field>
                   </v-col>
@@ -457,8 +467,8 @@
                   <v-col cols="1"><v-icon color="#fff" > mdi-arrow-right  </v-icon></v-col>
                   <v-col cols="9">
                     <div>
-                      <h3>{{leadership.leadershipOrgName}}</h3>
-                      <p>{{ leadership.leadershipPosition }} ( {{ leadership.leadershipStartDate }} - {{ leadership.leadershipEndDate }} )</p>
+                      <h3>{{leadership.orgName}}</h3>
+                      <p>{{ leadership.leadershipPosition }} ( {{ leadership.startDate }} - {{ leadership.endDate }} )</p>
                       <p v-for="note in leadership.leadershipNotes">&nbsp;&nbsp;- {{ note }}</p>
                     </div>
                   </v-col>
@@ -476,6 +486,14 @@
         </template>
 
         <template v-slot:item.6>
+          <v-alert
+            variant="outlined"
+            type="warning"
+            prominent
+            border="top"
+          >
+            This section is only applicable for Template 4
+          </v-alert>
           <v-card title="Honors/Awards">
             <br/>
             <v-row class="ml-3 mb-3">
@@ -504,7 +522,7 @@
                     <v-text-field
                       v-model="honorStartDate"
                       class="mb-2"
-                      label="Start Date (MMM,YYYY)"
+                      label="Start Date (mmm/yyyy or mm/dd/yyyy)"
                       hide-details
                     ></v-text-field>
                   </v-col>
@@ -512,7 +530,7 @@
                     <v-text-field
                       v-model="honorEndDate"
                       class="mb-2"
-                      label="End Date (MMM,YYYY)"
+                      label="End Date (mmm/yyyy or mm/dd/yyyy)"
                       hide-details
                     ></v-text-field>
                   </v-col>
@@ -564,7 +582,7 @@
                   <v-col cols="9">
                     <div>
                       <h3>{{honor.honorOrg}}</h3>
-                      <p>{{ honor.honorOrAward }} || {{ honor.honorStartDate }} - {{ honor.honorEndDate }}</p>
+                      <p>{{ honor.name }} || {{ honor.startDate }} - {{ honor.endDate }}</p>
                       <p v-for="note in honor.honorNotes">&nbsp;&nbsp;- {{ note }}</p>
                     </div>
                   </v-col>
@@ -650,6 +668,14 @@
         </template>
 
         <template v-slot:item.8>
+          <v-alert
+            variant="outlined"
+            type="warning"
+            prominent
+            border="top"
+          >
+            This section is only applicable for Template 3
+          </v-alert>
           <v-card title="Projects">
             <br/>
             <v-row class="ml-3 mb-3">
@@ -689,7 +715,7 @@
                     <v-text-field
                       v-model="projectStartDate"
                       class="mb-2"
-                      label="Start Date (MMM,YYYY)"
+                      label="Start Date (mmm/yyyy or mm/dd/yyyy)"
                       hide-details
                     ></v-text-field>
                   </v-col>
@@ -697,7 +723,7 @@
                     <v-text-field
                       v-model="projectEndDate"
                       class="mb-2"
-                      label="End Date (MMM,YYYY)"
+                      label="End Date (mmm/yyyy or mm/dd/yyyy)"
                       hide-details
                     ></v-text-field>
                   </v-col>
@@ -802,6 +828,18 @@
                   size="large"
                   variant="elevated"
                   rounded="xl"
+                  @click="getMatchScore"
+                  block
+                >
+                  Match Score
+                </v-btn>
+              </v-col>
+              <v-col cols="1">
+                <v-btn
+                  color="#711429"
+                  size="large"
+                  variant="elevated"
+                  rounded="xl"
                   @click="saveOnClick"
                   block
                 >
@@ -823,267 +861,410 @@
             </v-row>
           </v-card>
 
-          <v-card flat v-if="tempalte == 'Template 1' && showTemplate" width="70%" color="#fff">
-            <vue-html2pdf
-            :show-layout="false"
-            :preview-modal="true"
-            :paginate-elements-by-height="10"
-            :pdf-quality="2"
-            pdf-format="a4"
-            :ref="ref"
-            id= "template1ResumePDF"
-          >
-                  <section class="pdf-item">
-                    <v-card class="mx-auto px-10 py-8 overflow-y-auto" color="#fff">
-                      <div style="text-align:center;">
-                        <h2>{{ resumeDetails.fullName }}</h2>
-                        <p>{{ resumeDetails.location }} | {{ resumeDetails.phoneNumber }} | {{ resumeDetails.email }} | {{ resumeDetails.linkedinURL }}/{{ resumeDetails.websiteURL }}</p>
-                        <hr/>
-                      </div>
+          <v-row>
+            <v-col cols="9">
+            <v-card flat v-if="tempalte == 'Template 1' && showTemplate" width="70%" color="#fff">
+              <vue-html2pdf
+              :show-layout="false"
+              :preview-modal="true"
+              :paginate-elements-by-height="10"
+              :pdf-quality="2"
+              pdf-format="a4"
+              :ref="ref"
+              id= "template1ResumePDF"
+            >
+                    <section class="pdf-item">
+                      <v-card class="mx-auto px-10 py-8 overflow-y-auto" color="#fff">
+                        <div style="text-align:center;">
+                          <h2>{{ resumeDetails.fullName }}</h2>
+                          <p>{{ resumeDetails.location }} | {{ resumeDetails.phoneNumber }} | {{ resumeDetails.email }} | {{ resumeDetails.linkedinURL }}/{{ resumeDetails.websiteURL }}</p>
+                          <hr/>
+                        </div>
 
-                      <div>
-                        <br/>
-                        <h3>PROFESSIONAL SUMMARY</h3>
-                        <hr/>
-                        <p>
-                          {{ resumeDetails.professionalSummary }}
-                        </p>
-                      </div>
-
-                      <div>
-                        <br/>
-                        <h3>EDUCATION</h3>
-                        <hr/>
-                        <div v-for="edu in resumeDetails.educationDetails">
+                        <div>
                           <br/>
-                          <v-row class="px-3">
-                            <p style="font-size:16px;">
-                              <b>{{ edu.instituteName }}, {{ edu.location }} </b>
-                            </p>
-                            <v-spacer></v-spacer>
-                            <p style="font-size:14px;">
-                              {{ edu.startDate }} - {{ edu.endDate }}
-                            </p>
-                          </v-row>
-                          <br style="line-height:0px;margin: 6px 0;display: block;"/>
-                          <div style="font-size:14px;">
-                            <p>{{ edu.degree }}</p>
-                            <p>GPA: {{ edu.gpa }}</p>
-                            <p>Awards: {{ edu.awards.toString() }}</p>
-                            <p>Courses: {{ edu.courses.toString() }}</p>
+                          <h3>PROFESSIONAL SUMMARY</h3>
+                          <hr/>
+                          <p>
+                            {{ resumeDetails.professionalSummary }}
+                          </p>
+                        </div>
+
+                        <div>
+                          <br/>
+                          <h3>EDUCATION</h3>
+                          <hr/>
+                          <div v-for="edu in resumeDetails.educationDetails">
+                            <br/>
+                            <v-row class="px-3">
+                              <p style="font-size:16px;">
+                                <b>{{ edu.instituteName }}, {{ edu.location }} </b>
+                              </p>
+                              <v-spacer></v-spacer>
+                              <p style="font-size:14px;">
+                                {{ edu.startDate }} - {{ edu.endDate }}
+                              </p>
+                            </v-row>
+                            <br style="line-height:0px;margin: 6px 0;display: block;"/>
+                            <div style="font-size:14px;">
+                              <p>{{ edu.degree }}</p>
+                              <p>GPA: {{ edu.gpa }}</p>
+                              <p>Awards: {{ edu.awards.toString() }}</p>
+                              <p>Courses: {{ edu.courses.toString() }}</p>
+                            </div>
                           </div>
                         </div>
-                      </div>
 
-                      <div>
-                        <br/>
-                        <h3>PROFESSIONAL EXPERIENCE</h3>
-                        <hr/>
-                        <div v-for="experience in resumeDetails.experienceDetails">
+                        <div>
                           <br/>
-                          <v-row class="px-3">
-                            <p  style="font-size:16px;">
-                              <b>{{ experience.orgName }}, {{ experience.roleName }}, {{ experience.location }} </b>
-                            </p>
-                            <v-spacer></v-spacer>
-                            <p>
-                              Date ({{ experience.startDate }} - {{ experience.endDate }})
-                            </p>
-                          </v-row>
-                          <br style="line-height:0px;margin: 6px 0;display: block;"/>
-                          <div style="font-size:14px;">
-                            <p v-for="note in experience.experienceNotes">●	{{ note }}</p>
+                          <h3>PROFESSIONAL EXPERIENCE</h3>
+                          <hr/>
+                          <div v-for="experience in resumeDetails.experienceDetails">
+                            <br/>
+                            <v-row class="px-3">
+                              <p  style="font-size:16px;">
+                                <b>{{ experience.orgName }}, {{ experience.roleName }}, {{ experience.location }} </b>
+                              </p>
+                              <v-spacer></v-spacer>
+                              <p>
+                                Date ({{ experience.startDate }} - {{ experience.endDate }})
+                              </p>
+                            </v-row>
+                            <br style="line-height:0px;margin: 6px 0;display: block;"/>
+                            <div style="font-size:14px;">
+                              <p v-for="note in experience.experienceNotes">●	{{ note }}</p>
+                            </div>
                           </div>
                         </div>
-                      </div>
 
-                      <div>
-                        <br/>
-                        <h3>SKILLS | LEADERSHIP SKILLS | ACTIVITIES | EXTRACURRICULAR ACTIVITIES</h3>
-                        <hr/>
-                        <p v-for="skill in resumeDetails.skills">●	{{ skill.name }} : {{ skill.level }}</p>
-
-                      </div>
-                    </v-card>
-            </section>
-          </vue-html2pdf>
-          </v-card>
-
-          <v-card flat v-if="tempalte == 'Template 2' && showTemplate" width="70%" color="#fff">
-            <vue-html2pdf
-            :show-layout="false"
-            :preview-modal="true"
-            :paginate-elements-by-height="10"
-            :pdf-quality="2"
-            pdf-format="a4"
-            :ref="ref"
-            id= "template2ResumePDF"
-          >
-                  <section class="pdf-item">
-                    <v-card class="mx-auto px-10 py-8 overflow-y-auto" color="#fff">
-                      <div>
-                        <h2>{{ resumeDetails.fullName }}</h2>
-                        <p>{{ resumeDetails.location }} | {{ resumeDetails.phoneNumber }} | {{ resumeDetails.email }} | {{ resumeDetails.linkedinURL }}/{{ resumeDetails.websiteURL }}</p>
-                      </div>
-
-                      <div>
-                        <br/>
-                        <h3>PROFESSIONAL SUMMARY</h3>
-                        <p>
-                          {{ resumeDetails.professionalSummary }}
-                        </p>
-                      </div>
-
-                      <div>
-                        <br/>
-                        <h3>EDUCATION</h3>
-                        <div v-for="edu in resumeDetails.educationDetails">
+                        <div>
                           <br/>
-                          <v-row class="px-3">
-                            <p style="font-size:16px;">
-                              <b>{{ edu.instituteName }}, {{ edu.location }} </b> | {{ edu.startDate }} - {{ edu.endDate }}
-                            </p>
-                          </v-row>
-                          <br style="line-height:0px;margin: 6px 0;display: block;"/>
-                          <div style="font-size:14px;">
-                            <p>{{ edu.degree }}</p>
-                            <p>GPA: {{ edu.gpa }}</p>
+                          <h3>SKILLS | LEADERSHIP SKILLS | ACTIVITIES | EXTRACURRICULAR ACTIVITIES</h3>
+                          <hr/>
+                          <p v-for="skill in resumeDetails.skills">●	{{ skill.name }} : {{ skill.level }}</p>
+
+                        </div>
+                      </v-card>
+              </section>
+            </vue-html2pdf>
+            </v-card>
+
+            <v-card flat v-if="tempalte == 'Template 2' && showTemplate" width="70%" color="#fff">
+              <vue-html2pdf
+              :show-layout="false"
+              :preview-modal="true"
+              :paginate-elements-by-height="10"
+              :pdf-quality="2"
+              pdf-format="a4"
+              :ref="ref"
+              id= "template2ResumePDF"
+            >
+                    <section class="pdf-item">
+                      <v-card class="mx-auto px-10 py-8 overflow-y-auto" color="#fff">
+                        <div>
+                          <h2>{{ resumeDetails.fullName }}</h2>
+                          <p>{{ resumeDetails.location }} | {{ resumeDetails.phoneNumber }} | {{ resumeDetails.email }} | {{ resumeDetails.linkedinURL }}/{{ resumeDetails.websiteURL }}</p>
+                        </div>
+
+                        <div>
+                          <br/>
+                          <h3>PROFESSIONAL SUMMARY</h3>
+                          <p>
+                            {{ resumeDetails.professionalSummary }}
+                          </p>
+                        </div>
+
+                        <div>
+                          <br/>
+                          <h3>EDUCATION</h3>
+                          <div v-for="edu in resumeDetails.educationDetails">
+                            <br/>
+                            <v-row class="px-3">
+                              <p style="font-size:16px;">
+                                <b>{{ edu.instituteName }}, {{ edu.location }} </b> | {{ edu.startDate }} - {{ edu.endDate }}
+                              </p>
+                            </v-row>
+                            <br style="line-height:0px;margin: 6px 0;display: block;"/>
+                            <div style="font-size:14px;">
+                              <p>{{ edu.degree }}</p>
+                              <p>GPA: {{ edu.gpa }}</p>
+                            </div>
                           </div>
                         </div>
-                      </div>
 
-                      <div>
-                        <br/>
-                        <h3>EXPERIENCE</h3>
-                        <div v-for="experience in resumeDetails.experienceDetails">
+                        <div>
                           <br/>
-                          <v-row class="px-3">
-                            <p  style="font-size:16px;">
-                              <b>{{ experience.roleName }}, {{ experience.orgName }}</b> | {{ experience.startDate }} - {{ experience.endDate }}
-                            </p>
-                          </v-row>
-                          <br style="line-height:0px;margin: 6px 0;display: block;"/>
-                          <div style="font-size:14px;">
-                            <p v-for="note in experience.experienceNotes">●	{{ note }}</p>
+                          <h3>EXPERIENCE</h3>
+                          <div v-for="experience in resumeDetails.experienceDetails">
+                            <br/>
+                            <v-row class="px-3">
+                              <p  style="font-size:16px;">
+                                <b>{{ experience.roleName }}, {{ experience.orgName }}</b> | {{ experience.startDate }} - {{ experience.endDate }}
+                              </p>
+                            </v-row>
+                            <br style="line-height:0px;margin: 6px 0;display: block;"/>
+                            <div style="font-size:14px;">
+                              <p v-for="note in experience.experienceNotes">●	{{ note }}</p>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    </v-card>
-            </section>
-          </vue-html2pdf>
-          </v-card>
+                      </v-card>
+              </section>
+            </vue-html2pdf>
+            </v-card>
 
-          <v-card flat v-if="tempalte == 'Template 3' && showTemplate" width="70%" color="#fff">
-            <vue-html2pdf
-            :show-layout="false"
-            :preview-modal="true"
-            :paginate-elements-by-height="10"
-            :pdf-quality="2"
-            pdf-format="a4"
-            :ref="ref"
-            id= "template3ResumePDF"
-          >
-                  <section class="pdf-item">
-                    <v-card class="mx-auto px-10 py-8 overflow-y-auto" color="#fff">
-                      <div style="text-align:center;">
-                        <h2>{{ resumeDetails.fullName }}</h2>
-                        <p>{{ resumeDetails.location }} | {{ resumeDetails.phoneNumber }} | {{ resumeDetails.email }} | {{ resumeDetails.linkedinURL }}/{{ resumeDetails.websiteURL }}</p>
-                        <hr/>
-                      </div>
-
-                      <div>
-                        <br/>
-                        <p>
-                          {{ resumeDetails.professionalSummary }}
-                        </p>
-                      </div>
-
-                      <div>
-                        <br/>
-                        <h3>EDUCATION</h3>
-                        <hr/>
-                        <div v-for="edu in resumeDetails.educationDetails">
-                          <br/>
-                          <v-row class="px-3">
-                            <p style="font-size:16px;">
-                              <b>{{ edu.instituteName }}, {{ edu.location }} </b>
-                            </p>
-                            <v-spacer></v-spacer>
-                            <p style="font-size:14px;">
-                              {{ edu.startDate }} - {{ edu.endDate }}
-                            </p>
-                          </v-row>
-                          <br/>
-                          <v-row class="px-3">
-                            <p style="font-size:14px;">{{ edu.degree }}</p>
-                            <v-spacer></v-spacer>
-                            <p style="font-size:14px;">GPA: {{ edu.gpa }}</p>
-                          </v-row>
+            <v-card flat v-if="tempalte == 'Template 3' && showTemplate" width="70%" color="#fff">
+              <vue-html2pdf
+              :show-layout="false"
+              :preview-modal="true"
+              :paginate-elements-by-height="10"
+              :pdf-quality="2"
+              pdf-format="a4"
+              :ref="ref"
+              id= "template3ResumePDF"
+            >
+                    <section class="pdf-item">
+                      <v-card class="mx-auto px-10 py-8 overflow-y-auto" color="#fff">
+                        <div style="text-align:center;">
+                          <h2>{{ resumeDetails.fullName }}</h2>
+                          <p>{{ resumeDetails.location }} | {{ resumeDetails.phoneNumber }} | {{ resumeDetails.email }} | {{ resumeDetails.linkedinURL }}/{{ resumeDetails.websiteURL }}</p>
+                          <hr/>
                         </div>
-                      </div>
 
-                      <div>
-                        <br/>
-                        <h3>EXPERIENCE</h3>
-                        <hr/>
-                        <div v-for="experience in resumeDetails.experienceDetails">
+                        <div>
                           <br/>
-                          <v-row class="px-3">
-                            <p  style="font-size:16px;">
-                              <b>{{ experience.orgName }}, {{ experience.location }} </b>
-                            </p>
-                            <v-spacer></v-spacer>
-                            <p>
-                              {{ experience.startDate }} - {{ experience.endDate }}
-                            </p>
-                          </v-row>
-                          <v-row class="px-3">
-                            <p  style="font-size:16px;">{{ experience.roleName }}</p>
-                          </v-row>
+                          <p>
+                            {{ resumeDetails.professionalSummary }}
+                          </p>
+                        </div>
 
-                          <br style="line-height:0px;margin: 6px 0;display: block;"/>
-                          <div style="font-size:14px;">
-                            <p v-for="note in experience.experienceNotes">●	{{ note }}</p>
+                        <div>
+                          <br/>
+                          <h3>EDUCATION</h3>
+                          <hr/>
+                          <div v-for="edu in resumeDetails.educationDetails">
+                            <br/>
+                            <v-row class="px-3">
+                              <p style="font-size:16px;">
+                                <b>{{ edu.instituteName }}, {{ edu.location }} </b>
+                              </p>
+                              <v-spacer></v-spacer>
+                              <p style="font-size:14px;">
+                                {{ edu.startDate }} - {{ edu.endDate }}
+                              </p>
+                            </v-row>
+                            <br/>
+                            <v-row class="px-3">
+                              <p style="font-size:14px;">{{ edu.degree }}</p>
+                              <v-spacer></v-spacer>
+                              <p style="font-size:14px;">GPA: {{ edu.gpa }}</p>
+                            </v-row>
                           </div>
                         </div>
-                      </div>
 
-                      <div>
-                        <br/>
-                        <h3>PROJECTS</h3>
-                        <hr/>
-                        <div v-for="project in resumeDetails.projectDetails">
+                        <div>
                           <br/>
-                          <v-row class="px-3">
-                            <p  style="font-size:16px;">
-                              <b>{{ project.orgName }}, {{ project.location }} </b>
-                            </p>
-                            <v-spacer></v-spacer>
-                            <p>
-                              {{ project.startDate }} - {{ project.endDate }}
-                            </p>
-                          </v-row>
-                          <v-row class="px-3">
-                            <p  style="font-size:16px;">{{ project.projectName }}</p>
-                          </v-row>
+                          <h3>EXPERIENCE</h3>
+                          <hr/>
+                          <div v-for="experience in resumeDetails.experienceDetails">
+                            <br/>
+                            <v-row class="px-3">
+                              <p  style="font-size:16px;">
+                                <b>{{ experience.orgName }}, {{ experience.location }} </b>
+                              </p>
+                              <v-spacer></v-spacer>
+                              <p>
+                                {{ experience.startDate }} - {{ experience.endDate }}
+                              </p>
+                            </v-row>
+                            <v-row class="px-3">
+                              <p  style="font-size:16px;">{{ experience.roleName }}</p>
+                            </v-row>
 
-                          <br style="line-height:0px;margin: 6px 0;display: block;"/>
-                          <div style="font-size:14px;">
-                            <p v-for="note in project.projectNotes">●	{{ note }}</p>
+                            <br style="line-height:0px;margin: 6px 0;display: block;"/>
+                            <div style="font-size:14px;">
+                              <p v-for="note in experience.experienceNotes">●	{{ note }}</p>
+                            </div>
                           </div>
                         </div>
-                      </div>
 
-                      <div>
-                        <br/>
-                        <h3>SKILLS</h3>
-                        <hr/>
-                        <p>{{ formatSkills(resumeDetails.skills) }}</p>
-                      </div>
-                    </v-card>
-            </section>
-          </vue-html2pdf>
-          </v-card>
+                        <div>
+                          <br/>
+                          <h3>PROJECTS</h3>
+                          <hr/>
+                          <div v-for="project in resumeDetails.projectDetails">
+                            <br/>
+                            <v-row class="px-3">
+                              <p  style="font-size:16px;">
+                                <b>{{ project.orgName }}, {{ project.location }} </b>
+                              </p>
+                              <v-spacer></v-spacer>
+                              <p>
+                                {{ project.startDate }} - {{ project.endDate }}
+                              </p>
+                            </v-row>
+                            <v-row class="px-3">
+                              <p  style="font-size:16px;">{{ project.projectName }}</p>
+                            </v-row>
+
+                            <br style="line-height:0px;margin: 6px 0;display: block;"/>
+                            <div style="font-size:14px;">
+                              <p v-for="note in project.projectNotes">●	{{ note }}</p>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div>
+                          <br/>
+                          <h3>SKILLS</h3>
+                          <hr/>
+                          <p>{{ formatSkills(resumeDetails.skills) }}</p>
+                        </div>
+                      </v-card>
+              </section>
+            </vue-html2pdf>
+            </v-card>
+
+            <v-card flat v-if="tempalte == 'Template 4' && showTemplate" width="70%" color="#fff">
+              <vue-html2pdf
+              :show-layout="false"
+              :preview-modal="true"
+              :paginate-elements-by-height="10"
+              :pdf-quality="2"
+              pdf-format="a4"
+              :ref="ref"
+              id= "template4ResumePDF"
+            >
+                    <section class="pdf-item">
+                      <v-card class="mx-auto px-10 py-8 overflow-y-auto" color="#fff">
+                        <div style="text-align:center;">
+                          <h2>{{ resumeDetails.fullName }}</h2>
+                          <p>{{ resumeDetails.location }} ♦ {{ resumeDetails.phoneNumber }} ♦ {{ resumeDetails.email }} ♦ {{ resumeDetails.linkedinURL }} or {{ resumeDetails.websiteURL }}</p>
+                        </div>
+
+                        <div>
+                          <br/>
+                          <h3>OBJECTIVE</h3>
+                          <p>
+                            {{ resumeDetails.professionalSummary }}
+                          </p>
+                        </div>
+
+                        <div>
+                          <br/>
+                          <h3>EDUCATION</h3>
+                          <div v-for="edu in resumeDetails.educationDetails">
+                            <br style="line-height:0px;margin: 6px 0;display: block;"/>
+                            <v-row class="px-3">
+                              <p style="font-size:16px;">
+                                <b>{{ edu.instituteName }}, {{ edu.location }} </b>
+                              </p>
+                              <v-spacer></v-spacer>
+                              <p style="font-size:14px;">
+                                {{ edu.startDate }} - {{ edu.endDate }}
+                              </p>
+                            </v-row>
+                            <br/>
+                            <v-row class="px-3">
+                              <p style="font-size:14px;">{{ edu.degree }}</p>
+                            </v-row>
+                            <v-row class="px-3">
+                              <p style="font-size:14px;">Cumulative GPR: {{ edu.gpa }}</p>
+                            </v-row>
+                            <v-row class="px-3">
+                              <p>Coursework: {{ edu.courses.toString() }}</p>
+                            </v-row>
+                          <br/>
+
+                          </div>
+                        </div>
+
+                        <div>
+                          <h3>LEADERSHIP (or WORK EXPERIENCE, ACTIVITIES, VOLUNTEER WORK)</h3>
+                          <div v-for="leadership in resumeDetails.leadershipDetails">
+                            <br style="line-height:0px;margin: 6px 0;display: block;"/>
+                            <v-row class="px-3">
+                              <p  style="font-size:16px;">
+                                <b>{{ leadership.orgName }}</b>
+                              </p>
+                              <v-spacer></v-spacer>
+                              <p>
+                                {{ leadership.startDate }} - {{ leadership.endDate }}
+                              </p>
+                            </v-row>
+                            <v-row class="px-3">
+                              <p  style="font-size:16px;">{{ leadership.leadershipPosition }}</p>
+                            </v-row>
+
+                            <br style="line-height:0px;margin: 6px 0;display: block;"/>
+                            <div style="font-size:14px;">
+                              <p v-for="note in leadership.leadershipNotes">●	{{ note }}</p>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div>
+                          <br/>
+                          <h3>WORK EXPERIENCE (or LEADERSHIP, ACTIVITIES, VOLUNTEER WORK)</h3>
+                          <div v-for="experience in resumeDetails.experienceDetails">
+                            <br style="line-height:0px;margin: 6px 0;display: block;"/>
+                            <v-row class="px-3">
+                              <p  style="font-size:16px;">
+                                <b>{{ experience.orgName }}, {{ experience.location }} </b>
+                              </p>
+                              <v-spacer></v-spacer>
+                              <p>
+                                {{ experience.startDate }} - {{ experience.endDate }}
+                              </p>
+                            </v-row>
+                            <v-row class="px-3">
+                              <p  style="font-size:16px;">{{ experience.roleName }}</p>
+                            </v-row>
+
+                            <br style="line-height:0px;margin: 6px 0;display: block;"/>
+                            <div style="font-size:14px;">
+                              <p v-for="note in experience.experienceNotes">●	{{ note }}</p>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div>
+                          <br/>
+                          <h3>HONORS (and/or AWARDS)</h3>
+                          <div v-for="honor in resumeDetails.honorDetails">
+                            <br style="line-height:0px;margin: 6px 0;display: block;"/>
+                            <v-row class="px-3">
+                              <p  style="font-size:16px;">
+                                <b>{{ honor.name }}/{{ honor.honorOrg }} </b>
+                              </p>
+                              <v-spacer></v-spacer>
+                              <p>
+                                {{ honor.startDate }} - {{ honor.endDate }}
+                              </p>
+                            </v-row>
+                            <br style="line-height:0px;margin: 6px 0;display: block;"/>
+                            <div style="font-size:14px;">
+                              <p v-for="note in honor.honorNotes">●	{{ note }}</p>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div>
+                          <br/>
+                          <h3>SKILLS</h3>
+                          <p v-for="skill in resumeDetails.skills">●	{{ skill.name }} : {{ skill.level }}</p>
+                        </div>
+
+                      </v-card>
+              </section>
+            </vue-html2pdf>
+            </v-card>
+          </v-col>
+            <v-col cols="3">
+              <h3>Match Score:</h3>
+              <h1>{{ matchScore }} </h1>
+            </v-col>
+          </v-row>
         </template>
       </v-stepper>
     </v-container>
@@ -1474,6 +1655,7 @@
   <script>
   import html2pdf from "html2pdf.js";
   import ResumeService from '@/services/ResumeService'
+  import { CohereClient } from "cohere-ai"
   export default {
       data: () => ({
         step: null,
@@ -1551,7 +1733,7 @@
         projects:[],
         selectedProjects:[],
 
-        tempalteItems: ['Template 1', 'Template 2', 'Template 3'],
+        tempalteItems: ['Template 1', 'Template 2', 'Template 3', 'Template 4'],
         tempalte: "",
         opt: {
             margin: 0,
@@ -1575,17 +1757,27 @@
         currentHonorNote: "",
         resumeDetails: null,
         showTemplate: false,
-        resumeTitle: ""
+        resumeTitle: "",
+
+        matchScore: "0"
       }),
   
       methods: {
         onLoad(){
+          this.fullName = sessionStorage.getItem('UserName')
+          this.location = sessionStorage.getItem('UserLocation')
+          this.phoneNumber = sessionStorage.getItem('UserPhoneNumber')
+          this.email = sessionStorage.getItem('UserEmail')
+          this.linkedinURL = sessionStorage.getItem('UserLinkedinURL')
+          this.websiteURL = sessionStorage.getItem('UserWebsiteURL')
+          
           this.resumeDetails = {
             fullName: this.fullName,
             location: this.location,
             phoneNumber: this.phoneNumber,
             email: this.email,
             websiteURL: this.websiteURL,
+            linkedinURL: this.linkedinURL,
             professionalSummary: this.professionalSummary,
             educationDetails: this.selectedEducationDetails,
             experienceDetails: this.selectedExperienceDetails,
@@ -1737,9 +1929,9 @@
         
         addLeadership(){
           var leadershipDetail = {
-            leadershipOrgName: this.leadershipOrgName,
-            leadershipStartDate: this.leadershipStartDate,
-            leadershipEndDate: this.leadershipEndDate,
+            orgName: this.leadershipOrgName,
+            startDate: this.leadershipStartDate,
+            endDate: this.leadershipEndDate,
             leadershipPosition: this.leadershipPosition,
             leadershipNotes: this.leadershipNotes
           }
@@ -1784,10 +1976,10 @@
         
         addHonor(){
           var honorDetail = {
-            honorOrAward: this.honorOrAward,
+            name: this.honorOrAward,
             honorOrg: this.honorOrg,
-            honorStartDate: this.honorStartDate,
-            honorEndDate: this.honorEndDate,
+            startDate: this.honorStartDate,
+            endDate: this.honorEndDate,
             honorNotes: this.honorNotes
           }
           this.selectedHonors.push(honorDetail)
@@ -1911,6 +2103,8 @@
             professionalSummary: this.professionalSummary,
             educationDetails: this.selectedEducationDetails,
             experienceDetails: this.selectedExperienceDetails,
+            leadershipDetails: this.selectedLeadership,
+            honorDetails: this.selectedHonors,
             projectDetails: this.selectedProjects,
             skills: this.selectedSkills,
             jobdescription: this.jobdescription,
@@ -1938,17 +2132,20 @@
                 resumeTitle: this.resumeTitle,
                 UserID: sessionStorage.getItem('UserId'),
                 fullName: this.resumeDetails.fullName,
-                location: this.resumeDetails.location,
+                location: this.resumeDetails.location, 
                 phoneNumber: this.resumeDetails.phoneNumber,
                 email: this.resumeDetails.email,
-                websiteURL: this.resumeDetails.websiteURL,
-                linkedinURL: this.resumeDetails.linkedinURL,
                 professionalSummary: this.resumeDetails.professionalSummary,
                 templaterType: this.tempalte,
                 educationDetails: this.resumeDetails.educationDetails,
                 experienceDetails: this.resumeDetails.experienceDetails,
                 projectDetails: this.resumeDetails.projectDetails,
-                skills: this.resumeDetails.skills
+                skills: this.resumeDetails.skills,
+                leadershipDetails: this.resumeDetails.leadershipDetails,
+                honorDetails: this.resumeDetails.honorDetails,
+                jobDescription: this.jobdescription,
+                jobTitle: this.jobtitle,
+                matchScore: this.matchScore
               }).then((response)=> {
                 console.log(response.statusText)
                 if(response.statusText == "OK"){
@@ -1978,14 +2175,202 @@
             break;
             case "Template 3": currentTemplate = "template3ResumePDF" 
             break;
+            case "Template 4": currentTemplate = "template4ResumePDF" 
+            break;
             default: currentTemplate = "template1ResumePDF" 
             break; 
           }
           html2pdf().set(this.opt).from(document.getElementById(currentTemplate)).save()
+        },
+
+        async getMatchScore(){
+          var resumeRequest = ""
+          switch(this.tempalte){
+            case "Template 1": 
+              resumeRequest = this.resumeDetails.fullName + "\n" + this.resumeDetails.location + " | " + this.resumeDetails.phoneNumber + " | " + this.resumeDetails.email + " | " + this.resumeDetails.linkedinURL + "/" + this.resumeDetails.websiteURL
+              resumeRequest = resumeRequest + "\n" +  this.resumeDetails.professionalSummary + "\n EDUCATION \n" 
+
+              if(this.resumeDetails.educationDetails != null && this.resumeDetails.educationDetails.length > 0){
+                this.resumeDetails.educationDetails.forEach(edu => {
+                  resumeRequest = resumeRequest + " " + edu.instituteName + " ," + edu.location + " " + edu.startDate + "-" + edu.endDate + " " + edu.degree + "\n GPA: " + edu.gpa + "\n Awards: " + edu.awards.toString() + "\n Courses: " + edu.courses.toString()
+                });
+              }
+              else{
+                return
+              }
+              
+              if(this.resumeDetails.experienceDetails != null && this.resumeDetails.experienceDetails.length > 0){
+                resumeRequest = resumeRequest + "\n PROFESSIONAL EXPERIENCE \n"
+                this.resumeDetails.experienceDetails.forEach(experience => {
+                  resumeRequest = resumeRequest + " " + experience.orgName + " ," + experience.roleName + " ," + experience.location + " Date(" + experience.startDate + "-" + experience.endDate + ") \n" + experience.experienceNotes.toString()
+                });
+              }
+              else{
+                return
+              }
+
+              if(this.resumeDetails.skills != null && this.resumeDetails.skills.length > 0){
+                resumeRequest = resumeRequest + "\n SKILLS | LEADERSHIP SKILLS | ACTIVITIES | EXTRACURRICULAR ACTIVITIES \n"
+                this.resumeDetails.skills.forEach(skill => {
+                  resumeRequest = resumeRequest + " " + skill.name + " - " + skill.level + "\n"
+                });
+              }
+              else{
+                return
+              }
+              
+              break;
+            case "Template 2":  
+              resumeRequest = this.resumeDetails.fullName + "\n" + this.resumeDetails.location + " | " + this.resumeDetails.phoneNumber + " | " + this.resumeDetails.email + " | " + this.resumeDetails.linkedinURL + "/" + this.resumeDetails.websiteURL
+              resumeRequest = resumeRequest + " OBJECTIVE " +  this.resumeDetails.professionalSummary + " EDUCATION " 
+
+              if(this.resumeDetails.educationDetails != null && this.resumeDetails.educationDetails.length > 0){
+                this.resumeDetails.educationDetails.forEach(edu => {
+                  resumeRequest = resumeRequest + " " + edu.instituteName + " ," + edu.location + " " + edu.startDate + "-" + edu.endDate + " " + edu.degree + "\n GPA: " + edu.gpa
+                });
+              }
+              else{
+                return
+              }
+              
+              if(this.resumeDetails.experienceDetails != null && this.resumeDetails.experienceDetails.length > 0){
+                resumeRequest = resumeRequest + " EXPERIENCE "
+                this.resumeDetails.experienceDetails.forEach(experience => {
+                  resumeRequest = resumeRequest + experience.roleName + ", " + experience.orgName + " " + " " + experience.startDate + "-" + experience.endDate + " " + experience.experienceNotes.toString()
+                });
+              }
+              else{
+                return
+              }
+
+              break;
+            case "Template 3": 
+              resumeRequest = this.resumeDetails.fullName + "\n" + this.resumeDetails.location + " | " + this.resumeDetails.phoneNumber + " | " + this.resumeDetails.email + " | " + this.resumeDetails.linkedinURL + "/" + this.resumeDetails.websiteURL
+              resumeRequest = resumeRequest + "\n" +  this.resumeDetails.professionalSummary + "\n EDUCATION \n" 
+
+              if(this.resumeDetails.educationDetails != null && this.resumeDetails.educationDetails.length > 0){
+                this.resumeDetails.educationDetails.forEach(edu => {
+                  resumeRequest = resumeRequest + " " + edu.instituteName + " ," + edu.location + " " + edu.startDate + "-" + edu.endDate + " " + edu.degree + "\n GPA: " + edu.gpa
+                });
+              }
+              else{
+                return
+              }
+              
+              if(this.resumeDetails.experienceDetails != null && this.resumeDetails.experienceDetails.length > 0){
+                resumeRequest = resumeRequest + " EXPERIENCE "
+                this.resumeDetails.experienceDetails.forEach(experience => {
+                  resumeRequest = resumeRequest + " " + experience.orgName + " ," + experience.location + " " + experience.startDate + "-" + experience.endDate + " " + experience.roleName + " " + experience.experienceNotes.toString()
+                });
+              }
+              else{
+                return
+              }
+
+              if(this.resumeDetails.projectDetails != null && this.resumeDetails.projectDetails.length > 0){
+                resumeRequest = resumeRequest + " PROJECTS "
+                this.resumeDetails.projectDetails.forEach(project => {
+                  resumeRequest = resumeRequest + " " + project.orgName + " ," + project.location + " " + project.startDate + "-" + project.endDate + " " + project.projectName + " " + experience.roleName + " " + project.projectNotes.toString()
+                });
+              }
+              else{
+                return
+              }
+
+              if(this.resumeDetails.skills != null && this.resumeDetails.skills.length > 0){
+                resumeRequest = resumeRequest + " SKILLS "
+                this.resumeDetails.skills.forEach(skill => {
+                  resumeRequest = resumeRequest + " " + skill.name
+                });
+              }
+              else{
+                return
+              }
+              break;
+            case "Template 4": 
+              resumeRequest = this.resumeDetails.fullName + " " + this.resumeDetails.location + " | " + this.resumeDetails.phoneNumber + " | " + this.resumeDetails.email + " | " + this.resumeDetails.linkedinURL + "/" + this.resumeDetails.websiteURL
+              resumeRequest = resumeRequest + " OBJECTIVE " +  this.resumeDetails.professionalSummary + " EDUCATION " 
+
+              if(this.resumeDetails.educationDetails != null && this.resumeDetails.educationDetails.length > 0){
+                this.resumeDetails.educationDetails.forEach(edu => {
+                  resumeRequest = resumeRequest + " " + edu.instituteName + " ," + edu.location + " " + edu.startDate + "-" + edu.endDate + " " + edu.degree + " GPA: " + edu.gpa + " Courses: " + edu.courses.toString()
+                });
+              }
+              else{
+                return
+              }
+              
+              if(this.resumeDetails.leadershipDetails != null && this.resumeDetails.leadershipDetails.length > 0){
+                resumeRequest = resumeRequest + " LEADERSHIP (or WORK EXPERIENCE, ACTIVITIES, VOLUNTEER WORK) "
+                this.resumeDetails.leadershipDetails.forEach(leadership => {
+                  resumeRequest = resumeRequest + " " + leadership.orgName + " " + leadership.startDate + "-" + leadership.endDate + " " + leadership.leadershipPosition + " " + leadership.leadershipNotes.toString()
+                });
+              }
+              else{
+                return
+              }
+
+              if(this.resumeDetails.experienceDetails != null && this.resumeDetails.experienceDetails.length > 0){
+                resumeRequest = resumeRequest + " WORK EXPERIENCE (or LEADERSHIP, ACTIVITIES, VOLUNTEER WORK) "
+                this.resumeDetails.experienceDetails.forEach(experience => {
+                  resumeRequest = resumeRequest + " " + experience.orgName + " ," + experience.roleName + " ," + experience.location + " Date(" + experience.startDate + "-" + experience.endDate + ") \n" + experience.experienceNotes.toString()
+                });
+              }
+              else{
+                return
+              }
+
+              if(this.resumeDetails.honorDetails != null && this.resumeDetails.honorDetails.length > 0){
+                resumeRequest = resumeRequest + " HONORS (and/or AWARDS) "
+                this.resumeDetails.honorDetails.forEach(honor => {
+                  resumeRequest = resumeRequest + " " + honor.name + "/" + honor.honorOrg + " " + honor.startDate + "-" + honor.endDate + " " + honor.honorNotes.toString()
+                });
+              }
+              else{
+                return
+              }
+
+              if(this.resumeDetails.skills != null && this.resumeDetails.skills.length > 0){
+                resumeRequest = resumeRequest + " SKILLS "
+                this.resumeDetails.skills.forEach(skill => {
+                  resumeRequest = resumeRequest + " " + skill.name + " : " + skill.level + "\n"
+                });
+              }
+              else{
+                return
+              }
+              break;
+            default:
+              break; 
+          }
+
+          var aiMessage = "Can you give me only the Match score percent without any text for below job description and resume details? Job Description: " + this.resumeDetails.jobdescription + "\n" + resumeRequest
+          try{
+            const cohere = new CohereClient({
+              token: "XtLnyRvwWZxsq2YXfHqIAsSXtdFlwvQwWSGC1BAz",
+            });
+
+            await cohere.chat({
+              chatHistory: [],
+              message: aiMessage,
+              connectors: [{ id: 'web-search' }]
+            }).then((response)=> {
+                console.log(response)
+                if(response.text != null){
+                  console.log(response.text)
+                  this.matchScore = response.text
+                }
+                this.setLoadingOverLay(false, "")
+              })
+          }
+          catch(err){
+            console.log(err)
+            this.setLoadingOverLay(false, "")
+          } 
         }
       },
       watch: {
-      
+        
       },
       beforeMount(){
         this.onLoad()
