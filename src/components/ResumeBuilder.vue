@@ -600,6 +600,14 @@
         </template>
       
         <template v-slot:item.7>
+          <v-alert
+            variant="outlined"
+            type="warning"
+            prominent
+            border="top"
+          >
+            Skill level is mandatory for Template 1
+          </v-alert>
           <v-card title="Skills" flat>
             <br/>
             <v-row class="ml-3 mb-3">
@@ -927,7 +935,7 @@
                               </p>
                               <v-spacer></v-spacer>
                               <p>
-                                ({{ experience.startDate }} - {{ experience.endDate }})
+                                Date ({{ experience.startDate }} - {{ experience.endDate }})
                               </p>
                             </v-row>
                             <br style="line-height:0px;margin: 6px 0;display: block;"/>
