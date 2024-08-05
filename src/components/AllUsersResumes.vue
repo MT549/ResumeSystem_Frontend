@@ -101,4 +101,154 @@
     </v-row>
 </template>
   
-  
+methods: {
+    onLoad(){
+        this.linkedinURL = sessionStorage.getItem('UserLinkedinURL')
+        this.websiteURL = sessionStorage.getItem('UserWebsiteURL')
+
+        this.loadingOverlay = true
+        this.getResumes()
+    },
+    setVersion(version){
+        return "Version: " + version
+    },
+    openResumeOverlay(resume,linkedinurl, websiteurl){
+        console.log(resume)
+        this.linkedinURL = linkedinurl
+        this.websiteURL = websiteurl
+        this.comments = resume.comments
+        this.resumeDetails = resume
+        this.resumeOverlay = !this.resumeOverlay
+        this.showTemplate = true
+        this.tempalte = resume.templaterType
+    },
+    closeResumeOverlay(){
+
+    },
+
+    async getResumes() {
+        //this.$store.state.isUserLoggedIn
+        try{
+            this.setLoadingOverLay(true, "Please wait. While fetching your resumes...")
+            console.log(sessionStorage.getItem("UserId"))
+            await ResumeService.getAllResumes().then((response)=> {
+                console.log(response)
+                if(response.statusText == "OK"){
+                    this.users = response.data
+                    console.log("user all resume length: " + response.data.length)
+                }
+                this.setLoadingOverLay(false, "")
+            })
+        }
+        catch(err){
+            console.log(err)
+            this.setLoadingOverLay(false, "")
+        }
+    },
+     
+    exportToPDF() {
+        this.opt.filename = this.resumeDetails.resumeTitle != "" ? this.resumeDetails.resumeTitle + "_V" + this.resumeDetails.version + ".pdf" : "myresume.pdf"
+        var currentTemplate = ""
+        switch(this.tempalte){
+            case "Template 1": currentTemplate = "template1ResumePDF" 
+            break;
+            case "Template 2": currentTemplate = "template2ResumePDF" 
+            break;
+            case "Template 3": currentTemplate = "template3ResumePDF" 
+            break;
+            case "Template 4": currentTemplate = "template4ResumePDF" 
+            break;
+            default: currentTemplate = "template1ResumePDF" 
+            break; 
+        }
+        html2pdf().set(this.opt).from(document.getElementById(currentTemplate)).save()
+    },
+    setLoadingOverLay(isShow, message){
+        if(isShow){
+            this.loadingOverlay = true
+            this.loadingMSG = message
+        }
+        else{
+            this.loadingOverlay = false
+            this.loadingMSG = null
+        }
+    },
+
+    async deleteResumeVersion(resumeID) {
+        try{
+            this.setLoadingOverLay(true, "Please wait. While Deleting...")
+            await ResumeService.deleteResumeVersion(resumeID).then((response)=> {
+                console.log(response)
+                if(response.statusText == "OK"){
+                    this.resumeOverlay = !this.resumeOverlay
+                    this.refreshResumes = !this.refreshResumes
+                }
+                this.setLoadingOverLay(false, "")
+            })
+        }
+        catch(err){
+            console.log(err)
+            this.setLoadingOverLay(false, "")
+        }
+    },
+
+    async saveComments(resumeID) {
+        try{
+            this.setLoadingOverLay(true, "Please wait. While Deleting...")
+            await ResumeService.saveResumeComments(resumeID,{
+              comments: this.comments
+            }).then((response)=> {
+                console.log(response)
+                if(response.statusText == "OK"){
+                  this.showSnackBar("Comments saved successfully.")
+                }
+                this.setLoadingOverLay(false, "")
+            })
+        }
+        catch(err){
+            console.log(err)
+            this.setLoadingOverLay(false, "")
+        }
+    },
+    
+    formatSkills(skills){
+    var formattedSkills = ""
+    skills.forEach(element => {
+        if(formattedSkills != ""){
+        formattedSkills = formattedSkills + " | " + element.Name
+        }
+        else{
+        formattedSkills = element.Name
+        }
+    });
+    return formattedSkills
+    },
+    showSnackBar(msg){
+        this.snackbar = true
+        this.snackbarMSG = msg
+    },
+    formatcomma(val){
+        var formattedVal = ""
+        val.forEach(element => {
+            if(formattedVal != ""){
+                formattedVal = formattedVal + " , " + element.description
+            }
+            else{
+                formattedVal = element.description
+            }
+        });
+        return formattedVal
+    }
+},
+beforeMount() {
+    this.onLoad()
+},
+watch: {
+    refreshResumes: function(){
+        this.loadingOverlay = true
+        this.users = []
+        this.getResumes() 
+    }
+}
+}
+</script>
