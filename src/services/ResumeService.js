@@ -7,8 +7,14 @@ export default{
     getResumes (userID){
         return Api().get('/resumes/' + userID)
     },
+    getAllResumes (){
+        return Api().get('/allResumes')
+    },
     saveResumeVersion (request){
         return Api().put('/saveResumeVersion', request)
+    },
+    saveResumeComments (resumeID, request){
+        return Api().put('/saveResumeComments/' + resumeID, request)
     },
     deleteResumeVersion (id){
         return Api().delete('/resume/' + id)
