@@ -13,6 +13,7 @@
                 </v-btn>
             </v-col>
         </v-row>
+        
         <v-list v-show="this.resumes.length > 0">
             <v-list-group no-action v-for='resume in resumes' :key="resume.id">
                 <template v-slot:activator="{ props }">
@@ -531,6 +532,8 @@
             <br/>
             <div class="text-center">
               <h4>Comments:</h4>
+              <br/>
+              <p>{{ resumeDetails.comments }}</p>
             </div>
             <br/>
           </v-card>
