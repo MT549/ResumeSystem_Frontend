@@ -23,6 +23,7 @@
                 </template>
 
                     <v-divider color="#fff"></v-divider>
+                    <h3 v-show="user.Resumes.length <= 0">No resumes to show</h3>
 
                     <v-list-group no-action v-for='resume in user.Resumes' :key="resume.id">
                     <template v-slot:activator="{ props }">
@@ -698,6 +699,9 @@
                         console.log(response)
                         if(response.statusText == "OK"){
                           this.showSnackBar("Comments saved successfully.")
+                          this.resumeOverlay = !this.resumeOverlay
+                          this.refreshResumes = !this.refreshResumes
+
                         }
                         this.setLoadingOverLay(false, "")
                     })
